@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PatientCard.Data;
 
@@ -11,9 +12,11 @@ using PatientCard.Data;
 namespace PatientCard.Migrations
 {
     [DbContext(typeof(PatientCardContext))]
-    partial class PatientCardContextModelSnapshot : ModelSnapshot
+    [Migration("20230319192926_Test1")]
+    partial class Test1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -232,35 +235,6 @@ namespace PatientCard.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("PatientCard.Models.Temperature", b =>
-                {
-                    b.Property<int>("TemperatureId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TemperatureId"));
-
-                    b.Property<string>("ApplicationUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime?>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("TemperatureId");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.ToTable("Temperature");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -310,22 +284,6 @@ namespace PatientCard.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("PatientCard.Models.Temperature", b =>
-                {
-                    b.HasOne("PatientCard.Areas.Identity.Data.ApplicationUser", "ApplicationUser")
-                        .WithMany("Temperatures")
-                        .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ApplicationUser");
-                });
-
-            modelBuilder.Entity("PatientCard.Areas.Identity.Data.ApplicationUser", b =>
-                {
-                    b.Navigation("Temperatures");
                 });
 #pragma warning restore 612, 618
         }
