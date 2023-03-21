@@ -3,10 +3,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PatientCard.Models
 {
-    public class Pressure
+    public class Glucose
     {
         [Key]
-        public int PressureId { get; set; }
+        public int GlucoseId { get; set; }
         public string? Value { get; set; }
         public DateTime? Date { get; set; }
 

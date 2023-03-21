@@ -12,8 +12,8 @@ using PatientCard.Data;
 namespace PatientCard.Migrations
 {
     [DbContext(typeof(PatientCardContext))]
-    [Migration("20230319193047_Test2")]
-    partial class Test2
+    [Migration("20230319204335_migr")]
+    partial class migr
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -243,15 +243,12 @@ namespace PatientCard.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TemperatureId"));
 
-                    b.Property<string>("ApplicationUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime?>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .IsRequired()
@@ -259,7 +256,7 @@ namespace PatientCard.Migrations
 
                     b.HasKey("TemperatureId");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Temperature");
                 });
@@ -317,13 +314,13 @@ namespace PatientCard.Migrations
 
             modelBuilder.Entity("PatientCard.Models.Temperature", b =>
                 {
-                    b.HasOne("PatientCard.Areas.Identity.Data.ApplicationUser", "ApplicationUser")
+                    b.HasOne("PatientCard.Areas.Identity.Data.ApplicationUser", "User")
                         .WithMany("Temperatures")
-                        .HasForeignKey("ApplicationUserId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("PatientCard.Areas.Identity.Data.ApplicationUser", b =>

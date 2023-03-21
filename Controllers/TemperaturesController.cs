@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -22,11 +23,14 @@ namespace PatientCard.Controllers
         // GET: Temperatures
         public async Task<IActionResult> Index()
         {
-              return _context.Temperature != null ? 
-                          View(await _context.Temperature.ToListAsync()) :
-                          Problem("Entity set 'PatientCardContext.Temperature'  is null.");
-        }
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // получаем Id текущего пользователя
+            var temperatures = await _context.Temperature
+                .Where(t => t.UserId == userId)
+                .Include(t => t.User)
+                .ToListAsync();
 
+            return View(temperatures);
+        }
         // GET: Temperatures/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -36,6 +40,7 @@ namespace PatientCard.Controllers
             }
 
             var temperature = await _context.Temperature
+                .Include(a => a.User)
                 .FirstOrDefaultAsync(m => m.TemperatureId == id);
             if (temperature == null)
             {
@@ -44,11 +49,11 @@ namespace PatientCard.Controllers
 
             return View(temperature);
         }
-
         // GET: Temperatures/Create
         public IActionResult Create()
         {
-            return View();
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
+            return View(new Temperature { UserId = User.FindFirstValue(ClaimTypes.NameIdentifier) });
         }
 
         // POST: Temperatures/Create
@@ -64,8 +69,10 @@ namespace PatientCard.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", temperature.UserId);
             return View(temperature);
         }
+
 
         // GET: Temperatures/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -74,19 +81,20 @@ namespace PatientCard.Controllers
             {
                 return NotFound();
             }
-
             var temperature = await _context.Temperature.FindAsync(id);
             if (temperature == null)
             {
                 return NotFound();
             }
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // получаем Id текущего пользователя
+            ViewData["UserId"] = new SelectList(_context.Users.Where(u => u.Id == userId), "Id", "Id", temperature.UserId);
             return View(temperature);
         }
 
-        // POST: Temperatures/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+            // POST: Temperatures/Edit/5
+            // To protect from overposting attacks, enable the specific properties you want to bind to.
+            // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+            [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("TemperatureId,Value,Date,UserId")] Temperature temperature)
         {
@@ -115,6 +123,7 @@ namespace PatientCard.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", temperature.UserId);
             return View(temperature);
         }
 
@@ -127,6 +136,7 @@ namespace PatientCard.Controllers
             }
 
             var temperature = await _context.Temperature
+                .Include(t => t.User)
                 .FirstOrDefaultAsync(m => m.TemperatureId == id);
             if (temperature == null)
             {

@@ -12,8 +12,8 @@ using PatientCard.Data;
 namespace PatientCard.Migrations
 {
     [DbContext(typeof(PatientCardContext))]
-    [Migration("20230319174553_Person")]
-    partial class Person
+    [Migration("20230321184802_Health diary")]
+    partial class Healthdiary
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -235,6 +235,126 @@ namespace PatientCard.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("PatientCard.Models.Anthropometry", b =>
+                {
+                    b.Property<int>("AnthropometryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AnthropometryId"));
+
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("AnthropometryId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Anthropometry");
+                });
+
+            modelBuilder.Entity("PatientCard.Models.Glucose", b =>
+                {
+                    b.Property<int>("GlucoseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GlucoseId"));
+
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("GlucoseId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Glucose");
+                });
+
+            modelBuilder.Entity("PatientCard.Models.Oxygen", b =>
+                {
+                    b.Property<int>("OxygenId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OxygenId"));
+
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("OxygenId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Oxygen");
+                });
+
+            modelBuilder.Entity("PatientCard.Models.Pressure", b =>
+                {
+                    b.Property<int>("PressureId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PressureId"));
+
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PressureId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Pressure");
+                });
+
+            modelBuilder.Entity("PatientCard.Models.Temperature", b =>
+                {
+                    b.Property<int>("TemperatureId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TemperatureId"));
+
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TemperatureId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Temperature");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -284,6 +404,56 @@ namespace PatientCard.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("PatientCard.Models.Anthropometry", b =>
+                {
+                    b.HasOne("PatientCard.Areas.Identity.Data.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("PatientCard.Models.Glucose", b =>
+                {
+                    b.HasOne("PatientCard.Areas.Identity.Data.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("PatientCard.Models.Oxygen", b =>
+                {
+                    b.HasOne("PatientCard.Areas.Identity.Data.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("PatientCard.Models.Pressure", b =>
+                {
+                    b.HasOne("PatientCard.Areas.Identity.Data.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("PatientCard.Models.Temperature", b =>
+                {
+                    b.HasOne("PatientCard.Areas.Identity.Data.ApplicationUser", "User")
+                        .WithMany("Temperatures")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("PatientCard.Areas.Identity.Data.ApplicationUser", b =>
+                {
+                    b.Navigation("Temperatures");
                 });
 #pragma warning restore 612, 618
         }

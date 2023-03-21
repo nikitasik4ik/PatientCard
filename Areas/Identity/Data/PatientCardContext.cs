@@ -16,9 +16,14 @@ public class PatientCardContext : IdentityDbContext<ApplicationUser>
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        // Customize the ASP.NET Identity model and override the defaults if needed.
-        // For example, you can rename the ASP.NET Identity table names and more.
-        // Add your customizations after calling base.OnModelCreating(builder);
+        //создать свойства
     }
     public DbSet<PatientCard.Models.Temperature> Temperature { get; set; } = default!;
+    public DbSet<PatientCard.Models.Anthropometry> Anthropometry { get; set; } = default!;
+    public DbSet<PatientCard.Models.Glucose> Glucose { get; set; } = default!;
+    public DbSet<PatientCard.Models.Oxygen> Oxygen { get; set; } = default!;
+    public DbSet<PatientCard.Models.Pressure> Pressure { get; set; } = default!;
+    public DbSet<PatientCard.Models.Doctor> Doctor { get; set; } = default!;
+    public DbSet<PatientCard.Models.Analyze> Analyze { get; set; } = default!;
+    public DbSet<PatientCard.Models.Departament> Departament { get; set; } = default!;
 }
