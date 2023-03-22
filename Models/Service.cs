@@ -14,6 +14,7 @@ namespace PatientCard.Models
         //[Required]
         //[StringLength(20)]
         public string CodeService { get; set; }
+        public object Analyzes { get; internal set; }
 
         //public virtual ICollection<Analyze> Analyzes { get; set; } = new List<Analyze>();
 

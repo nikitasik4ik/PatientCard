@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualBasic;
+using PatientCard.Areas.Identity.Data;
 using System.ComponentModel.DataAnnotations;
 
 namespace PatientCard.Models
@@ -8,11 +9,12 @@ namespace PatientCard.Models
         [Key]
         public int PolyclinicId { get; set; }
 
-        public int? UserId { get; set; }
+        public string? UserId { get; set; }  // внешний ключ
+        public ApplicationUser? User { get; set; }  // свойство навигации
 
         public DateTime? Date { get; set; }
 
-        public int? DepartmentId { get; set; }
+        public int? DepartamentId { get; set; }
 
         public string Complaints { get; set; }
 

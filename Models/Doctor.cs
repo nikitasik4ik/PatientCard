@@ -11,7 +11,7 @@ namespace PatientCard.Models
 
         public string? SignatureDoctor { get; set; }
 
-        public virtual ICollection<Analyze> Analyzes { get; } = new List<Analyze>();
+        //public virtual ICollection<Analyze> Analyzes { get; } = new List<Analyze>();
 
         //public virtual ICollection<DisabilitySheet> DisabilitySheets { get; } = new List<DisabilitySheet>();
 

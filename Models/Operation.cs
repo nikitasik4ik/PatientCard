@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualBasic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using PatientCard.Areas.Identity.Data;
 
 namespace PatientCard.Models
 {
@@ -8,7 +9,8 @@ namespace PatientCard.Models
     {
         [Key]
         public int OperationId { get; set; }
-
+        public string? UserId { get; set; }  // внешний ключ
+        public ApplicationUser? User { get; set; }  // свойство навигации
         public DateTime? DateOperation { get; set; }
 
         public int? IdDepartamnet { get; set; }

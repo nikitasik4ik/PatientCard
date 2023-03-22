@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PatientCard.Areas.Identity.Data;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace PatientCard.Models
@@ -7,7 +8,8 @@ namespace PatientCard.Models
     {
         [Key]
         public int HospitalId { get; set; }
-        public int? UserId { get; set; }
+        public string? UserId { get; set; }  // внешний ключ
+        public ApplicationUser? User { get; set; }  // свойство навигации
         public int? DepartamentId { get; set; }
         public int? ReceptionId { get; set; }
         public int? InspectionHospitalId { get; set; }
