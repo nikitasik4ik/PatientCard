@@ -4,10 +4,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PatientCard.Models
 {
-    public class InspectionHospital
+    public class InspectionPolyclinic
     {
         [Key]
-        public int IdInspectionHospital { get; set; }
+        public int IdInspectionPoliclinic { get; set; }
         public string? UserId { get; set; }  // внешний ключ
         public ApplicationUser? User { get; set; }  // свойство навигации
         public int? IdDepartament { get; set; }
@@ -19,10 +19,11 @@ namespace PatientCard.Models
         public int? IdService { get; set; }
         [ForeignKey("IdService")]
         public virtual Service? Service { get; set; }
-        public string? InspectionPlan { get; set; }
-        public string? Complaint { get; set; }
-        public string? Inspection { get; set; }
+        public string? Complaints { get; set; }
+        public string AnamnesisDisease { get; set; } = null!;
+        public string? Diagnosis { get; set; }
+        public string? Recommendation { get; set; }
+        public virtual ICollection<Polyclinic> Polyclinics { get; set; } = new List<Polyclinic>();
 
-        public virtual ICollection<Hospital> Hospital { get; set; } = new List<Hospital>();
     }
 }

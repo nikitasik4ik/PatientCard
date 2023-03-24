@@ -1,0 +1,36 @@
+﻿@model PatientCard.Models.Departament
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Departament</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NameDepartament)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NameDepartament)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.OfficeDepartament)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.OfficeDepartament)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.AdressDepartament)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.AdressDepartament)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.IdDepartament">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

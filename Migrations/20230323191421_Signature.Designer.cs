@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PatientCard.Data;
 
@@ -11,9 +12,11 @@ using PatientCard.Data;
 namespace PatientCard.Migrations
 {
     [DbContext(typeof(PatientCardContext))]
-    partial class PatientCardContextModelSnapshot : ModelSnapshot
+    [Migration("20230323191421_Signature")]
+    partial class Signature
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -886,9 +889,6 @@ namespace PatientCard.Migrations
                     b.Property<int?>("IdDoctor")
                         .HasColumnType("int");
 
-                    b.Property<int?>("IdSignatureDoctor")
-                        .HasColumnType("int");
-
                     b.Property<string>("RecipeName")
                         .HasColumnType("nvarchar(max)");
 
@@ -898,8 +898,6 @@ namespace PatientCard.Migrations
                     b.HasKey("IdRecipe");
 
                     b.HasIndex("IdDoctor");
-
-                    b.HasIndex("IdSignatureDoctor");
 
                     b.HasIndex("UserId");
 
@@ -1435,17 +1433,11 @@ namespace PatientCard.Migrations
                         .WithMany("Recipe")
                         .HasForeignKey("IdDoctor");
 
-                    b.HasOne("PatientCard.Models.SignatureDoctor", "SignatureDoctor")
-                        .WithMany()
-                        .HasForeignKey("IdSignatureDoctor");
-
                     b.HasOne("PatientCard.Areas.Identity.Data.ApplicationUser", "User")
                         .WithMany("Recipe")
                         .HasForeignKey("UserId");
 
                     b.Navigation("Doctor");
-
-                    b.Navigation("SignatureDoctor");
 
                     b.Navigation("User");
                 });

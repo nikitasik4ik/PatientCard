@@ -21,7 +21,7 @@ namespace PatientCard.Areas.Identity.Data
         public ICollection<DisabilitySheet> DisabilitySheet { get; set; }  // свойство навигации
         public ICollection<Hospital> Hospital { get; set; }  // свойство навигации
         public ICollection<InspectionHospital> InspectionHospital { get; set; }  // свойство навигации
-        public ICollection<InspectionPoliclinic> InspectionPoliclinic { get; set; }  // свойство навигации
+        public ICollection<InspectionPolyclinic> InspectionPoliclinic { get; set; }  // свойство навигации
         public ICollection<MedicalCar> MedicalCar { get; set; }  // свойство навигации
         public ICollection<Operation> Operation { get; set; }  // свойство навигации
         public ICollection<Polyclinic> Polyclinic { get; set; }  // свойство навигации

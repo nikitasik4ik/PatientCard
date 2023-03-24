@@ -1,15 +1,20 @@
 ﻿using PatientCard.Areas.Identity.Data;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PatientCard.Models
 {
     public class Stydy
     {
         [Key]
-        public int StydyId { get; set; }
+        public int IdStydy { get; set; }
 
-        public int? DepartamentId { get; set; }
-
+        public int? IdDepartament { get; set; }
+        [ForeignKey("IdDepartament")]
+        public virtual Departament? Departament { get; set; }
+        public int? IdOrganization { get; set; }
+        [ForeignKey("IdOrganization")]
+        public virtual Organization? Organization { get; set; }
         public int? Number { get; set; }
 
         public string? UserId { get; set; }  // внешний ключ
@@ -23,16 +28,14 @@ namespace PatientCard.Models
 
         public string? Conclusion { get; set; }
 
-        public int? DoctorId { get; set; }
+        public int? IdDoctor { get; set; }
+        [ForeignKey("IdDoctor")]
+        public virtual Doctor? Doctor { get; set; }
 
-        //public virtual Departament Departament { get; set; }
-
-        //public virtual Doctor Doctor { get; set; }
-
-        //public virtual PersonalDate Person { get; set; }
-
-        //public virtual ICollection<Polyclinic> Polyclinics { get; set; }
-
-        //public virtual ICollection<Reception> Receptions { get; set; }
+        public virtual ICollection<Polyclinic> Polyclinics { get; set; } = new List<Polyclinic>();
+        public virtual ICollection<Reception> Reception { get; set; } = new List<Reception>();
     }
 }
+
+
+

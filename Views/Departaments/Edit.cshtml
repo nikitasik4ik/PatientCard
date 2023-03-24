@@ -1,0 +1,44 @@
+﻿@model PatientCard.Models.Departament
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Departament</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdDepartament" />
+            <div class="form-group">
+                <label asp-for="NameDepartament" class="control-label"></label>
+                <input asp-for="NameDepartament" class="form-control" />
+                <span asp-validation-for="NameDepartament" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OfficeDepartament" class="control-label"></label>
+                <input asp-for="OfficeDepartament" class="form-control" />
+                <span asp-validation-for="OfficeDepartament" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AdressDepartament" class="control-label"></label>
+                <input asp-for="AdressDepartament" class="form-control" />
+                <span asp-validation-for="AdressDepartament" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

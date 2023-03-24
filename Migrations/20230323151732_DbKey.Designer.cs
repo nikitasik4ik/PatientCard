@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PatientCard.Data;
 
@@ -11,9 +12,11 @@ using PatientCard.Data;
 namespace PatientCard.Migrations
 {
     [DbContext(typeof(PatientCardContext))]
-    partial class PatientCardContextModelSnapshot : ModelSnapshot
+    [Migration("20230323151732_DbKey")]
+    partial class DbKey
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -378,13 +381,10 @@ namespace PatientCard.Migrations
                     b.Property<string>("FullNameDoctor")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("IdSignatureDoctor")
-                        .HasColumnType("int")
-                        .HasColumnName("IdSignatureDoctor");
+                    b.Property<string>("SignatureDoctor")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IdDoctor");
-
-                    b.HasIndex("IdSignatureDoctor");
 
                     b.ToTable("Doctor");
                 });
@@ -645,6 +645,9 @@ namespace PatientCard.Migrations
                     b.Property<int?>("IdOrganization")
                         .HasColumnType("int");
 
+                    b.Property<int?>("IdOrganozation")
+                        .HasColumnType("int");
+
                     b.Property<int?>("IdService")
                         .HasColumnType("int");
 
@@ -748,6 +751,9 @@ namespace PatientCard.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("IdOrganization")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdOrganozation")
                         .HasColumnType("int");
 
                     b.Property<int?>("IdStydy")
@@ -886,9 +892,6 @@ namespace PatientCard.Migrations
                     b.Property<int?>("IdDoctor")
                         .HasColumnType("int");
 
-                    b.Property<int?>("IdSignatureDoctor")
-                        .HasColumnType("int");
-
                     b.Property<string>("RecipeName")
                         .HasColumnType("nvarchar(max)");
 
@@ -898,8 +901,6 @@ namespace PatientCard.Migrations
                     b.HasKey("IdRecipe");
 
                     b.HasIndex("IdDoctor");
-
-                    b.HasIndex("IdSignatureDoctor");
 
                     b.HasIndex("UserId");
 
@@ -923,38 +924,6 @@ namespace PatientCard.Migrations
                     b.HasKey("IdService");
 
                     b.ToTable("Service");
-                });
-
-            modelBuilder.Entity("PatientCard.Models.SignatureDoctor", b =>
-                {
-                    b.Property<int>("IdSignatureDoctor")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdSignatureDoctor"));
-
-                    b.Property<string>("Certificate")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("IdDoctor")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Information")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ValidUntil")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("ValidWith")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("IdSignatureDoctor");
-
-                    b.HasIndex("IdDoctor")
-                        .IsUnique()
-                        .HasFilter("[IdDoctor] IS NOT NULL");
-
-                    b.ToTable("SignatureDoctor");
                 });
 
             modelBuilder.Entity("PatientCard.Models.Stydy", b =>
@@ -981,6 +950,9 @@ namespace PatientCard.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("IdOrganization")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdOrganozation")
                         .HasColumnType("int");
 
                     b.Property<int?>("Number")
@@ -1147,15 +1119,6 @@ namespace PatientCard.Migrations
                     b.Navigation("Organization");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("PatientCard.Models.Doctor", b =>
-                {
-                    b.HasOne("PatientCard.Models.SignatureDoctor", "SignatureDoctor")
-                        .WithMany()
-                        .HasForeignKey("IdSignatureDoctor");
-
-                    b.Navigation("SignatureDoctor");
                 });
 
             modelBuilder.Entity("PatientCard.Models.Glucose", b =>
@@ -1435,28 +1398,13 @@ namespace PatientCard.Migrations
                         .WithMany("Recipe")
                         .HasForeignKey("IdDoctor");
 
-                    b.HasOne("PatientCard.Models.SignatureDoctor", "SignatureDoctor")
-                        .WithMany()
-                        .HasForeignKey("IdSignatureDoctor");
-
                     b.HasOne("PatientCard.Areas.Identity.Data.ApplicationUser", "User")
                         .WithMany("Recipe")
                         .HasForeignKey("UserId");
 
                     b.Navigation("Doctor");
 
-                    b.Navigation("SignatureDoctor");
-
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("PatientCard.Models.SignatureDoctor", b =>
-                {
-                    b.HasOne("PatientCard.Models.Doctor", "Doctor")
-                        .WithMany()
-                        .HasForeignKey("IdDoctor");
-
-                    b.Navigation("Doctor");
                 });
 
             modelBuilder.Entity("PatientCard.Models.Stydy", b =>
