@@ -1,0 +1,17 @@
+﻿@model PatientCard.Models.PersonalAccount
+
+<h2>DisabilitySheet</h2>
+@if (Model.DisabilitySheet != null)
+{
+        <p>User: @Model.DisabilitySheet.User.UserName</p>
+        <p>Doctor: @Model.DisabilitySheet.Doctor.FullNameDoctor</p>
+        <p>From Date: @Model.DisabilitySheet.FromDate</p>
+}
+
+<h2>Analyze</h2>
+@if (Model.Analyze != null)
+{
+        <p>Date Analyzes: @Model.Analyze.DateAnalyzes</p>
+        <p>Doctor: @Model.Analyze.Doctor.FullNameDoctor</p>
+        <p>Service: @Model.Analyze.Service.NameService</p>
+}

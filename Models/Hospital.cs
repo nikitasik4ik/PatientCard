@@ -14,7 +14,7 @@ namespace PatientCard.Models
         public int? IdDepartament { get; set; }
         [ForeignKey("IdDepartament")]
         public virtual Departament? Departament { get; set; }
-        public int? IdOrganozatiom { get; set; }
+        public int? IdOrganozation { get; set; }
         [ForeignKey("IdOrganization")]
         public virtual Organization? Organization { get; set; }
         public int? IdReception { get; set; }

@@ -22,7 +22,8 @@ namespace PatientCard.Controllers
         // GET: Analyzes
         public async Task<IActionResult> Index()
         {
-            var patientCardContext = _context.Analyze.Include(a => a.Departament).Include(a => a.Doctor).Include(a => a.Organization).Include(a => a.Service).Include(a => a.User);
+            var patientCardContext = _context.Analyze.Include(a => a.Departament).Include(a => a.Doctor).Include(a => a.Organization).
+                Include(a => a.Service).Include(a => a.User);
             return View(await patientCardContext.ToListAsync());
         }
 
@@ -52,10 +53,10 @@ namespace PatientCard.Controllers
         // GET: Analyzes/Create
         public IActionResult Create()
         {
-            ViewData["IdDepartament"] = new SelectList(_context.Departament, "IdDepartament", "IdDepartament");
-            ViewData["IdDoctor"] = new SelectList(_context.Doctor, "IdDoctor", "IdDoctor");
-            ViewData["IdOrganization"] = new SelectList(_context.Organization, "IdOrganization", "IdOrganization");
-            ViewData["IdService"] = new SelectList(_context.Service, "IdService", "IdService");
+            ViewData["IdDepartament"] = new SelectList(_context.Departament, "IdDepartament", "NameDepartament");
+            ViewData["IdDoctor"] = new SelectList(_context.Doctor, "IdDoctor", "FullNameDoctor");
+            ViewData["IdOrganization"] = new SelectList(_context.Organization, "IdOrganization", "Name");
+            ViewData["IdService"] = new SelectList(_context.Service, "IdService", "NameService");
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
@@ -110,30 +111,11 @@ namespace PatientCard.Controllers
         public async Task<IActionResult> Edit(int id, [Bind("IdAnalyzes,IdDepartament,IdOrganization,IdService,DateAnalyzes,IdDoctor,UserId")] Analyze analyze)
         {
             if (id != analyze.IdAnalyzes)
-            {
-                return NotFound();
-            }
-
+            {return NotFound();}
             if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(analyze);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!AnalyzeExists(analyze.IdAnalyzes))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
+            {try{_context.Update(analyze);await _context.SaveChangesAsync();}catch (DbUpdateConcurrencyException){if (!AnalyzeExists(analyze.IdAnalyzes))
+                    {return NotFound();}else{throw;}}
+                return RedirectToAction(nameof(Index));}
             ViewData["IdDepartament"] = new SelectList(_context.Departament, "IdDepartament", "IdDepartament", analyze.IdDepartament);
             ViewData["IdDoctor"] = new SelectList(_context.Doctor, "IdDoctor", "IdDoctor", analyze.IdDoctor);
             ViewData["IdOrganization"] = new SelectList(_context.Organization, "IdOrganization", "IdOrganization", analyze.IdOrganization);

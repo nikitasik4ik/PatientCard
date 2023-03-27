@@ -1,0 +1,135 @@
+﻿@model PatientCard.Models.HealthDiary
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<script>
+    function changeContent(tab) {
+    $('.nav-link').removeClass('active');
+    $('.tab-pane').removeClass('active');
+    $('#' + tab).addClass('active');
+    $('a[data-toggle="pill"][href="#' + tab + '"]').addClass('active');
+    $('button[data-tab="'+tab+'"]').addClass('active');
+}
+</script>
+
+<ul class="nav nav-pills">
+    <li class="nav-item ">
+        <button class="nav-link rounded-0" data-tab="home" onclick="changeContent('home')">Температура</button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link rounded-0 active" data-tab="menu1" onclick="changeContent('menu1')">Уровень кислорода</button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link rounded-0" data-tab="menu2" onclick="changeContent('menu2')">Антропометрия</button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link rounded-0" data-tab="menu3" onclick="changeContent('menu3')">Давление</button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link rounded-0" data-tab="menu4" onclick="changeContent('menu4')">Уровень глюкозы</button>
+    </li>
+</ul>
+<div class="tab-content">
+    <div class="tab-pane container p-0" id="home">
+        <h5 class="text-uppercase p-2 text-center">Измерения температуры</h5>
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark text-white">
+                <tr>
+                    <th>@Html.DisplayNameFor(m => Model.Temperature.FirstOrDefault().Value)</th>
+                    <th>@Html.DisplayNameFor(m => Model.Temperature.FirstOrDefault().Date)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var temp in Model.Temperature)
+                {
+                    <tr>
+                        <td>@temp.Value</td>
+                        <td>@temp.Date</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="tab-pane container active p-0" id="menu1">
+        <h5 class="text-uppercase p-2 text-center">Уровень кислорода</h5>
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark text-white">
+                <tr>
+                    <th>@Html.DisplayNameFor(m => Model.Oxygen.FirstOrDefault().Value)</th>
+                    <th>@Html.DisplayNameFor(m => Model.Oxygen.FirstOrDefault().Date)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var oxygen in Model.Oxygen)
+                {
+                    <tr>
+                        <td>@oxygen.Value</td>
+                        <td>@oxygen.Date</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="tab-pane container p-0" id="menu2">
+        <h5 class="text-uppercase p-2 text-center">Антропометрические данные</h5>
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark text-white">
+                <tr>
+                    <th>@Html.DisplayNameFor(m => Model.Anthropometry.FirstOrDefault().Value)</th>
+                    <th>@Html.DisplayNameFor(m => Model.Anthropometry.FirstOrDefault().Date)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var antr in Model.Anthropometry)
+                {
+                    <tr>
+                        <td>@antr.Value</td>
+                        <td>@antr.Date</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="tab-pane container p-0" id="menu3">
+        <h5 class="text-uppercase p-2 text-center">Давление</h5>
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark text-white">
+                <tr>
+                    <th>@Html.DisplayNameFor(m => Model.Pressure.FirstOrDefault().Value)</th>
+                    <th>@Html.DisplayNameFor(m => Model.Pressure.FirstOrDefault().Date)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var pres in Model.Pressure)
+                {
+                    <tr>
+                        <td>@pres.Value</td>
+                        <td>@pres.Date</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="tab-pane container p-0" id="menu4">
+        <h5 class="text-uppercase p-2 text-center">Уровень глюкозы</h5>
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark text-white">
+                <tr>
+                    <th>@Html.DisplayNameFor(m => Model.Glucose.FirstOrDefault().Value)</th>
+                    <th>@Html.DisplayNameFor(m => Model.Glucose.FirstOrDefault().Date)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var gluc in Model.Glucose)
+                {
+                    <tr>
+                        <td>@gluc.Value</td>
+                        <td>@gluc.Date</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

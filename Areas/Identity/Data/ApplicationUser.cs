@@ -16,6 +16,24 @@ namespace PatientCard.Areas.Identity.Data
         [Column(TypeName = "nvarchar(100)")]
         public string LastName { get; set; }
 
+        public string? Patronymic { get; set; }
+        public string? GenderName { get; set; }
+
+        public DateTime? DataBirth { get; set; }
+
+        public int? PassportSeries { get; set; }
+
+        public string? AdressReg { get; set; }
+
+        public string? AdressRes { get; set; }
+
+        public string? Phone { get; set; }
+
+        public int? Snils { get; set; }
+
+        public int? Polisy { get; set; }
+
+        public string? PlaceWork { get; set; }
         public ICollection<Analyze> Analyze { get; set; }  // свойство навигации
         public ICollection<Anthropometry> Anthropometry { get; set; }  // свойство навигации
         public ICollection<DisabilitySheet> DisabilitySheet { get; set; }  // свойство навигации

@@ -4,37 +4,39 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Анализы</h1>
 <p>
-    <a class="btn btn-primary" asp-action="Create">Create New</a>
+    <a class="btn btn-primary" asp-action="Create">Добавить</a>
 </p>
 <table class="table table-striped">
     <thead class="thead-dark">
         <tr>
-            <th scope="col">Department</th>
-            <th scope="col">Organization</th>
-            <th scope="col">Service</th>
-            <th scope="col">DateAnalyzes</th>
-            <th scope="col">Doctor</th>
-            <th scope="col">User</th>
-            <th scope="col">Actions</th>
+            <th scope="col">Учреждение</th>
+            <th scope="col">Отделение</th>
+            <th scope="col">Услуга</th>
+            <th scope="col">Дата</th>
+            <th scope="col">Доктор</th>
+            <th scope="col">Имя</th>
+            <th scope="col">Фамилия</th>
+            <th scope="col">Действия</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
-                <td>@Html.DisplayFor(modelItem => item.Departament.IdDepartament)</td>
-                <td>@Html.DisplayFor(modelItem => item.Organization.IdOrganization)</td>
-                <td>@Html.DisplayFor(modelItem => item.Service.IdService)</td>
+                <td>@Html.DisplayFor(modelItem => item.Departament.NameDepartament)</td>
+                <td>@Html.DisplayFor(modelItem => item.Organization.Name)</td>
+                <td>@Html.DisplayFor(modelItem => item.Service.NameService)</td>
                 <td>@Html.DisplayFor(modelItem => item.DateAnalyzes)</td>
-                <td>@Html.DisplayFor(modelItem => item.Doctor.IdDoctor)</td>
-                <td>@Html.DisplayFor(modelItem => item.User.Id)</td>
+                <td>@Html.DisplayFor(modelItem => item.Doctor.FullNameDoctor)</td>
+                <td>@Html.DisplayFor(modelItem => item.User.FirstName)</td>
+                <td>@Html.DisplayFor(modelItem => item.User.LastName)</td>
                 <td>
                     <div class="btn-group" role="group">
-                        <a class="btn btn-info" asp-action="Details" asp-route-id="@item.IdAnalyzes">Details</a>
-                        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.IdAnalyzes">Edit</a>
-                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.IdAnalyzes">Delete</a>
+                        <a class="btn btn-info" asp-action="Details" asp-route-id="@item.IdAnalyzes">Детали</a>
+                        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.IdAnalyzes">Редактировать</a>
+                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.IdAnalyzes">Удалить</a>
                     </div>
                 </td>
             </tr>

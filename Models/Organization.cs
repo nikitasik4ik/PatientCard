@@ -9,11 +9,11 @@ namespace PatientCard.Models
         public int IdOrganization { get; set; }
         public string? Name { get; set; }
         public int? IdDepartament { get; set; }
-        public int? IdDoctor { get; set; }
         [ForeignKey("IdDepartament")]
         public virtual Departament? Departament { get; set; }
-        [ForeignKey("IdDoctor")]
-        public virtual Doctor? Doctor { get; set; }
+        //public int? IdDoctor { get; set; }
+        //[ForeignKey("IdDoctor")]
+        //public virtual Doctor? Doctor { get; set; }
 
         public virtual ICollection<Analyze> Analyzes { get; set; } = new List<Analyze>();
         public virtual ICollection<DisabilitySheet> DisabilitySheet { get; set; } = new List<DisabilitySheet>();

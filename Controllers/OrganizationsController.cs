@@ -22,7 +22,7 @@ namespace PatientCard.Controllers
         // GET: Organizations
         public async Task<IActionResult> Index()
         {
-            var patientCardContext = _context.Organization.Include(o => o.Departament).Include(o => o.Doctor);
+            var patientCardContext = _context.Organization.Include(o => o.Departament);
             return View(await patientCardContext.ToListAsync());
         }
 
@@ -36,7 +36,6 @@ namespace PatientCard.Controllers
 
             var organization = await _context.Organization
                 .Include(o => o.Departament)
-                .Include(o => o.Doctor)
                 .FirstOrDefaultAsync(m => m.IdOrganization == id);
             if (organization == null)
             {
@@ -50,7 +49,6 @@ namespace PatientCard.Controllers
         public IActionResult Create()
         {
             ViewData["IdDepartament"] = new SelectList(_context.Departament, "IdDepartament", "IdDepartament");
-            ViewData["IdDoctor"] = new SelectList(_context.Doctor, "IdDoctor", "IdDoctor");
             return View();
         }
 
@@ -59,7 +57,7 @@ namespace PatientCard.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdOrganization,Name,IdDepartament,IdDoctor")] Organization organization)
+        public async Task<IActionResult> Create([Bind("IdOrganization,Name,IdDepartament")] Organization organization)
         {
             if (ModelState.IsValid)
             {
@@ -68,7 +66,6 @@ namespace PatientCard.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdDepartament"] = new SelectList(_context.Departament, "IdDepartament", "IdDepartament", organization.IdDepartament);
-            ViewData["IdDoctor"] = new SelectList(_context.Doctor, "IdDoctor", "IdDoctor", organization.IdDoctor);
             return View(organization);
         }
 
@@ -86,7 +83,6 @@ namespace PatientCard.Controllers
                 return NotFound();
             }
             ViewData["IdDepartament"] = new SelectList(_context.Departament, "IdDepartament", "IdDepartament", organization.IdDepartament);
-            ViewData["IdDoctor"] = new SelectList(_context.Doctor, "IdDoctor", "IdDoctor", organization.IdDoctor);
             return View(organization);
         }
 
@@ -95,7 +91,7 @@ namespace PatientCard.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdOrganization,Name,IdDepartament,IdDoctor")] Organization organization)
+        public async Task<IActionResult> Edit(int id, [Bind("IdOrganization,Name,IdDepartament")] Organization organization)
         {
             if (id != organization.IdOrganization)
             {
@@ -123,7 +119,6 @@ namespace PatientCard.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdDepartament"] = new SelectList(_context.Departament, "IdDepartament", "IdDepartament", organization.IdDepartament);
-            ViewData["IdDoctor"] = new SelectList(_context.Doctor, "IdDoctor", "IdDoctor", organization.IdDoctor);
             return View(organization);
         }
 
@@ -137,7 +132,6 @@ namespace PatientCard.Controllers
 
             var organization = await _context.Organization
                 .Include(o => o.Departament)
-                .Include(o => o.Doctor)
                 .FirstOrDefaultAsync(m => m.IdOrganization == id);
             if (organization == null)
             {

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PatientCard.Data;
 
@@ -11,9 +12,11 @@ using PatientCard.Data;
 namespace PatientCard.Migrations
 {
     [DbContext(typeof(PatientCardContext))]
-    partial class PatientCardContextModelSnapshot : ModelSnapshot
+    [Migration("20230324225730_Organization")]
+    partial class Organization
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -167,18 +170,9 @@ namespace PatientCard.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("AdressReg")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("AdressRes")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DataBirth")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -190,9 +184,6 @@ namespace PatientCard.Migrations
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("GenderName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -212,16 +203,7 @@ namespace PatientCard.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<int?>("PassportSeries")
-                        .HasColumnType("int");
-
                     b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Patronymic")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
@@ -230,17 +212,8 @@ namespace PatientCard.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("PlaceWork")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("Polisy")
-                        .HasColumnType("int");
-
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("Snils")
-                        .HasColumnType("int");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
@@ -372,6 +345,9 @@ namespace PatientCard.Migrations
                     b.Property<int?>("IdOrganization")
                         .HasColumnType("int");
 
+                    b.Property<int?>("IdOrganozatiom")
+                        .HasColumnType("int");
+
                     b.Property<string>("Reason")
                         .HasColumnType("nvarchar(max)");
 
@@ -479,7 +455,7 @@ namespace PatientCard.Migrations
                     b.Property<int?>("IdOrganization")
                         .HasColumnType("int");
 
-                    b.Property<int?>("IdOrganozation")
+                    b.Property<int?>("IdOrganozatiom")
                         .HasColumnType("int");
 
                     b.Property<int?>("IdReception")
@@ -709,6 +685,9 @@ namespace PatientCard.Migrations
                     b.Property<int?>("IdDepartament")
                         .HasColumnType("int");
 
+                    b.Property<int?>("IdDoctor")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -775,7 +754,10 @@ namespace PatientCard.Migrations
                     b.Property<int?>("IdStydy")
                         .HasColumnType("int");
 
-                    b.Property<int?>("InspectionPolyclinicId")
+                    b.Property<int?>("InspectionId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("InspectionPolyclinicIdInspectionPoliclinic")
                         .HasColumnType("int");
 
                     b.Property<string>("Reason")
@@ -796,7 +778,7 @@ namespace PatientCard.Migrations
 
                     b.HasIndex("IdStydy");
 
-                    b.HasIndex("InspectionPolyclinicId");
+                    b.HasIndex("InspectionPolyclinicIdInspectionPoliclinic");
 
                     b.HasIndex("UserId");
 
@@ -1375,7 +1357,7 @@ namespace PatientCard.Migrations
 
                     b.HasOne("PatientCard.Models.InspectionPolyclinic", "InspectionPolyclinic")
                         .WithMany("Polyclinics")
-                        .HasForeignKey("InspectionPolyclinicId");
+                        .HasForeignKey("InspectionPolyclinicIdInspectionPoliclinic");
 
                     b.HasOne("PatientCard.Areas.Identity.Data.ApplicationUser", "User")
                         .WithMany("Polyclinic")

@@ -25,7 +25,7 @@ namespace PatientCard.Models
         public string? Complaints { get; set; }
 
         public string? Reason { get; set; }
-        public int? InspectionId { get; set; }
+        public int? InspectionPolyclinicId { get; set; }
 
         public virtual InspectionPolyclinic? InspectionPolyclinic { get; set; }
         public int? IdFinancing { get; set; }

@@ -4,6 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - AuthSystem</title>
+    
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/AuthSystem.styles.css" asp-append-version="true" />
@@ -142,7 +147,20 @@
                                 <div class="sidebar-submenu">
                                     <ul>
                                         <li>
-                                            @Html.ActionLink("Поликлиника", "Index", "ли")
+                                            @Html.ActionLink("Поликлиника", "Index", "Polyclinics")
+                                        </li>
+                                    </ul>
+                                </div>
+                        </li>
+                        <li class="sidebar-dropdown">
+                                <a href="#">
+                                    <i class="far fa-gem"></i>
+                                    <span>Пациенты</span>
+                                </a>
+                                <div class="sidebar-submenu">
+                                    <ul>
+                                        <li>
+                                            @Html.ActionLink("Пациенты", "Index", "Users")
                                         </li>
                                     </ul>
                                 </div>
@@ -157,7 +175,7 @@
                     <i class="fa fa-cog"></i>
                     <span class="badge-sonar"></span>
                 </a>
-                <a href="#">
+                <a href="/Identity/Account/Logout">
                     <i class="fa fa-power-off"></i>
                 </a>
             </div>
