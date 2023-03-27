@@ -1,17 +1,126 @@
 ﻿@model PatientCard.Models.PersonalAccount
 
-<h2>DisabilitySheet</h2>
-@if (Model.DisabilitySheet != null)
-{
-        <p>User: @Model.DisabilitySheet.User.UserName</p>
-        <p>Doctor: @Model.DisabilitySheet.Doctor.FullNameDoctor</p>
-        <p>From Date: @Model.DisabilitySheet.FromDate</p>
+@{
+ViewBag.Title = "Index";
 }
 
-<h2>Analyze</h2>
-@if (Model.Analyze != null)
-{
-        <p>Date Analyzes: @Model.Analyze.DateAnalyzes</p>
-        <p>Doctor: @Model.Analyze.Doctor.FullNameDoctor</p>
-        <p>Service: @Model.Analyze.Service.NameService</p>
+<script>
+    function changeContent(tab) {
+    $('.nav-link').removeClass('active');
+    $('.tab-pane').removeClass('active');
+    $('#' + tab).addClass('active');
+    $('a[data-toggle="pill"][href="#' + tab + '"]').addClass('active');
+    $('button[data-tab="'+tab+'"]').addClass('active');
 }
+</script>
+<ul class="nav nav-pills">
+    <li class="nav-item ">
+        <button class="nav-link rounded-0" data-tab="home" onclick="changeContent('home')">Лист нетрудоспособности</button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link rounded-0" data-tab="menu1" onclick="changeContent('menu1')">Анализы</button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link rounded-0" data-tab="menu2" onclick="changeContent('menu2')">Антропометрия</button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link rounded-0" data-tab="menu3" onclick="changeContent('menu3')">Температура</button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link rounded-0 active" data-tab="menu4" onclick="changeContent('menu4')">Давление</button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link rounded-0" data-tab="menu5" onclick="changeContent('menu5')">Уровень глюкозы</button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link rounded-0" data-tab="menu6" onclick="changeContent('menu6')">Уровень кислорода</button>
+    </li>
+</ul>
+<div class="tab-content">
+    <div class="tab-pane container p-0" id="home">
+        <h5 class="text-uppercase p-2 text-center">Лист нетрудоспособности</h5>
+        @if (Model.DisabilitySheet != null)
+        {
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <th>User</th>
+                    <td>@Model.DisabilitySheet.User.UserName</td>
+                </tr>
+                <tr>
+                    <th>Doctor</th>
+                    <td>@Model.DisabilitySheet.Doctor.FullNameDoctor</td>
+                </tr>
+                <tr>
+                    <th>From Date</th>
+                    <td>@Model.DisabilitySheet.FromDate</td>
+                </tr>
+            </table>
+        }
+    </div>
+    <div class="tab-pane container p-0" id="menu1">
+        <h5 class="text-uppercase p-2 text-center">Анализы</h5>
+        @if (Model.Analyze != null)
+        {
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark text-white">
+                    <tr>
+                        <th>Date Analyzes</th>
+                        <th>Doctor</th>
+                        <th>Service</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@Model.Analyze.DateAnalyzes</td>
+                        <td>@Model.Analyze.Doctor.FullNameDoctor</td>
+                        <td>@Model.Analyze.Service.NameService</td>
+                    </tr>
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No data available</p>
+        }
+    </div>
+
+    <div class="tab-pane container p-0" id="menu2">
+        <h5 class="text-uppercase p-2 text-center">Антропометрические данные</h5>
+        <div class="text-right mb-2">
+            @Html.ActionLink("Добавить", "Create", "Anthropometries", null, new { @class = "btn btn-primary" })
+        </div>
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark text-white">
+                <tr>
+                    <th>@Html.DisplayNameFor(m => Model.Anthropometry.FirstOrDefault().Value)</th>
+                    <th>@Html.DisplayNameFor(m => Model.Anthropometry.FirstOrDefault().Date)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var antr in Model.Anthropometry)
+                {
+                    <tr>
+                        <td>@antr.Value</td>
+                        <td>@antr.Date</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    @*<div class="tab-pane container p-0" id="menu3">
+        <h5 class="text-uppercase p-2 text-center">Температура</h5>
+        <!-- add temperature chart here -->
+    </div>
+    <div class="tab-pane container p-0 active" id="menu4">
+        <h5 class="text-uppercase p-2 text-center">Давление</h5>
+        <!-- add blood pressure chart here -->
+    </div>
+    <div class="tab-pane container p-0" id="menu5">
+        <h5 class="text-uppercase p-2 text-center">Уровень глюкозы</h5>
+        <!-- add glucose chart here -->
+    </div>
+    <div class="tab-pane container p-0" id="menu6">
+        <h5 class="text-uppercase p-2 text-center">Уровень кислорода</h5>
+        <!-- add oxygen chart here -->
+    </div>*@
+</div>

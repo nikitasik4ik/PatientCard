@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -26,7 +27,18 @@ namespace PatientCard.Controllers
                 Include(a => a.Service).Include(a => a.User);
             return View(await patientCardContext.ToListAsync());
         }
+        //public async Task<IActionResult> Index()
+        //{
+        //    //var patientCardContext = _context.Hospital.Include(h => h.Departament).Include(h => h.InspectionHospital).Include(h => h.Operation).Include(h => h.Organization).Include(h => h.Reception).Include(h => h.User);
+        //    //return View(await patientCardContext.ToListAsync());
+        //    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // получаем Id текущего пользователя
+        //    var analyzes = await _context.Analyze
+        //        .Where(t => t.UserId == userId)
+        //        .Include(t => t.User)
+        //        .ToListAsync();
 
+        //    return View(analyzes);
+        //}
         // GET: Analyzes/Details/5
         public async Task<IActionResult> Details(int? id)
         {

@@ -1,7 +1,7 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Profile";
+    ViewData["Title"] = "Профиль";
     ViewData["ActivePage"] = ManageNavPages.Index;
 }
 
@@ -21,20 +21,60 @@
                 <input asp-for="Input.LastName" class="form-control" />
                 <span asp-validation-for="Input.LastName" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="Input.Patronymic"></label>
+                <input asp-for="Input.Patronymic" class="form-control" />
+                <span asp-validation-for="Input.Patronymic" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.GenderName"></label>
+                <input asp-for="Input.GenderName" class="form-control" />
+                <span asp-validation-for="Input.GenderName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.DataBirth"></label>
+                <input asp-for="Input.DataBirth" type="date" class="form-control" />
+                <span asp-validation-for="Input.DataBirth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.PassportSeries"></label>
+                <input asp-for="Input.PassportSeries" class="form-control" />
+                <span asp-validation-for="Input.PassportSeries" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.AdressReg"></label>
+                <input asp-for="Input.AdressReg" class="form-control" />
+                <span asp-validation-for="Input.AdressReg" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.AdressRes"></label>
+                <input asp-for="Input.AdressRes" class="form-control" />
+                <span asp-validation-for="Input.AdressRes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Snils"></label>
+                <input asp-for="Input.Snils" class="form-control" />
+                <span asp-validation-for="Input.Snils" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Polisy"></label>
+                <input asp-for="Input.Polisy" class="form-control" />
+                <span asp-validation-for="Input.Polisy" class="text-danger"></span>
+            </div>
             <div class="form-floating mb-3">
                 <input asp-for="Username" class="form-control" placeholder="Please choose your username." disabled />
-                <label asp-for="Username" class="form-label"></label>
+                <label asp-for="Username" class="form-label">Имя пользователя</label>
             </div>
             <div class="form-floating mb-3">
-                <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Please enter your phone number."/>
-                <label asp-for="Input.PhoneNumber" class="form-label"></label>
-                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                <input asp-for="Input.Phone" class="form-control" placeholder="Please enter your phone number." />
+                <label asp-for="Input.Phone" class="form-label"></label>
+                <span asp-validation-for="Input.Phone" class="text-danger"></span>
             </div>
-            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
+            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Сохранить</button>
         </form>
     </div>
-</div>
 
+</div>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

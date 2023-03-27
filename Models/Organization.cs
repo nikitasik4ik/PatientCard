@@ -7,7 +7,6 @@ namespace PatientCard.Models
     {
         [Key]
         public int IdOrganization { get; set; }
-        [Display(Name = "Отделение")]
         public string? Name { get; set; }
         public int? IdDepartament { get; set; }
         [ForeignKey("IdDepartament")]

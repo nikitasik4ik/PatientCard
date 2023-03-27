@@ -14,7 +14,7 @@ namespace PatientCard.Models
         public int? IdDepartament { get; set; }
         [ForeignKey("IdDepartament")]
         public virtual Departament? Departament { get; set; }
-        public int? IdOrganozation { get; set; }
+        public int? IdOrganization { get; set; }
         [ForeignKey("IdOrganization")]
         public virtual Organization? Organization { get; set; }
         public int? IdReception { get; set; }
@@ -31,5 +31,3 @@ namespace PatientCard.Models
         public virtual Reception? Reception { get; set; }
     }
 }
-        //public int? DoctorHospitalId { get; set; }
-        //public virtual DoctorHospital DoctorHospital { get; set; }

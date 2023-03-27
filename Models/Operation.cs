@@ -12,7 +12,7 @@ namespace PatientCard.Models
         public string? UserId { get; set; }  // внешний ключ
         public ApplicationUser? User { get; set; }  // свойство навигации
         public DateTime? DateOperation { get; set; }
-
+        public string? NameOperation { get; set; }
         public int? IdDepartament { get; set; }
         [ForeignKey("IdDepartament")]
         public virtual Departament? Departament { get; set; }

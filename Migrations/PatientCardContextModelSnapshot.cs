@@ -219,7 +219,7 @@ namespace PatientCard.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Patronymic")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
@@ -479,9 +479,6 @@ namespace PatientCard.Migrations
                     b.Property<int?>("IdOrganization")
                         .HasColumnType("int");
 
-                    b.Property<int?>("IdOrganozation")
-                        .HasColumnType("int");
-
                     b.Property<int?>("IdReception")
                         .HasColumnType("int");
 
@@ -674,6 +671,9 @@ namespace PatientCard.Migrations
 
                     b.Property<int?>("IdService")
                         .HasColumnType("int");
+
+                    b.Property<string>("NameOperation")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProtocolOperation")
                         .HasColumnType("nvarchar(max)");

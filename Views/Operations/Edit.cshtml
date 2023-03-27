@@ -1,0 +1,81 @@
+﻿@model PatientCard.Models.Operation
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Operation</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdOperation" />
+            <div class="form-group">
+                <label asp-for="UserId" class="control-label"></label>
+                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateOperation" class="control-label"></label>
+                <input asp-for="DateOperation" class="form-control" />
+                <span asp-validation-for="DateOperation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NameOperation" class="control-label"></label>
+                <input asp-for="NameOperation" class="form-control" />
+                <span asp-validation-for="NameOperation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdDepartament" class="control-label"></label>
+                <select asp-for="IdDepartament" class="form-control" asp-items="ViewBag.IdDepartament"></select>
+                <span asp-validation-for="IdDepartament" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdOrganization" class="control-label"></label>
+                <select asp-for="IdOrganization" class="form-control" asp-items="ViewBag.IdOrganization"></select>
+                <span asp-validation-for="IdOrganization" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DiagnosisOperation" class="control-label"></label>
+                <input asp-for="DiagnosisOperation" class="form-control" />
+                <span asp-validation-for="DiagnosisOperation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdService" class="control-label"></label>
+                <select asp-for="IdService" class="form-control" asp-items="ViewBag.IdService"></select>
+                <span asp-validation-for="IdService" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DurationOperation" class="control-label"></label>
+                <input asp-for="DurationOperation" class="form-control" />
+                <span asp-validation-for="DurationOperation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProtocolOperation" class="control-label"></label>
+                <input asp-for="ProtocolOperation" class="form-control" />
+                <span asp-validation-for="ProtocolOperation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdFinancing" class="control-label"></label>
+                <select asp-for="IdFinancing" class="form-control" asp-items="ViewBag.IdFinancing"></select>
+                <span asp-validation-for="IdFinancing" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdDoctor" class="control-label"></label>
+                <select asp-for="IdDoctor" class="form-control" asp-items="ViewBag.IdDoctor"></select>
+                <span asp-validation-for="IdDoctor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

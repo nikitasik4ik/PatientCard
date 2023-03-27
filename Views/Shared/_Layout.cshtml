@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity;
+@using PatientCard.Areas.Identity.Data;
+@inject UserManager<ApplicationUser> UserManager
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -39,14 +42,9 @@
                 </div>
 
                 <div class="sidebar-header">
-                    <div class="user-pic">
-                        <img class="img-responsive img-rounded" src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg"
-                             alt="User picture">
-                    </div>
                     <div class="user-info">
                         <span class="user-name">
-                            Jhon
-                            <strong>Smith</strong>
+                            <a href="/Identity/Account/Manage/Index">@UserManager.GetUserAsync(User).Result</a>
                         </span>
                         <span class="user-role">Administrator</span>
                         <span class="user-status">
@@ -55,6 +53,7 @@
                         </span>
                     </div>
                 </div>
+
                 <!-- Поисковик  -->
                 <div class="sidebar-search">
                     <div>

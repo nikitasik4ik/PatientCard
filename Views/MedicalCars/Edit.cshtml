@@ -1,0 +1,66 @@
+﻿@model PatientCard.Models.MedicalCar
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>MedicalCar</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdMedicalCar" />
+            <div class="form-group">
+                <label asp-for="UserId" class="control-label"></label>
+                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateMedicalCar" class="control-label"></label>
+                <input asp-for="DateMedicalCar" class="form-control" />
+                <span asp-validation-for="DateMedicalCar" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PlaceExit" class="control-label"></label>
+                <input asp-for="PlaceExit" class="form-control" />
+                <span asp-validation-for="PlaceExit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReasonExit" class="control-label"></label>
+                <input asp-for="ReasonExit" class="form-control" />
+                <span asp-validation-for="ReasonExit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Diagnosis" class="control-label"></label>
+                <input asp-for="Diagnosis" class="form-control" />
+                <span asp-validation-for="Diagnosis" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ResultExit" class="control-label"></label>
+                <input asp-for="ResultExit" class="form-control" />
+                <span asp-validation-for="ResultExit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IssueExit" class="control-label"></label>
+                <input asp-for="IssueExit" class="form-control" />
+                <span asp-validation-for="IssueExit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdDoctor" class="control-label"></label>
+                <select asp-for="IdDoctor" class="form-control" asp-items="ViewBag.IdDoctor"></select>
+                <span asp-validation-for="IdDoctor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

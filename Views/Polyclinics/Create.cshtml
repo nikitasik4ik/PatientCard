@@ -1,0 +1,73 @@
+﻿@model PatientCard.Models.Polyclinic
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Polyclinic</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UserId" class="control-label"></label>
+                <select asp-for="UserId" class ="form-control" asp-items="ViewBag.UserId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdDepartament" class="control-label"></label>
+                <select asp-for="IdDepartament" class ="form-control" asp-items="ViewBag.IdDepartament"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdOrganization" class="control-label"></label>
+                <select asp-for="IdOrganization" class ="form-control" asp-items="ViewBag.IdOrganization"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Complaints" class="control-label"></label>
+                <input asp-for="Complaints" class="form-control" />
+                <span asp-validation-for="Complaints" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Reason" class="control-label"></label>
+                <input asp-for="Reason" class="form-control" />
+                <span asp-validation-for="Reason" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InspectionPolyclinicId" class="control-label"></label>
+                <select asp-for="InspectionPolyclinicId" class ="form-control" asp-items="ViewBag.InspectionPolyclinicId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdFinancing" class="control-label"></label>
+                <select asp-for="IdFinancing" class ="form-control" asp-items="ViewBag.IdFinancing"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Conditions" class="control-label"></label>
+                <input asp-for="Conditions" class="form-control" />
+                <span asp-validation-for="Conditions" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdAnalyze" class="control-label"></label>
+                <select asp-for="IdAnalyze" class ="form-control" asp-items="ViewBag.IdAnalyze"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdStydy" class="control-label"></label>
+                <select asp-for="IdStydy" class ="form-control" asp-items="ViewBag.IdStydy"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

@@ -26,41 +26,43 @@ namespace PatientCard.Areas.Identity.Pages.Account.Manage
             _signInManager = signInManager;
         }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public string Username { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         [TempData]
         public string StatusMessage { get; set; }
-
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         [BindProperty]
         public InputModel Input { get; set; }
-
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public class InputModel
         {
-            [Display(Name = "First Name")]
+            [Display(Name = "Имя")]
             public string FirstName { get; set; }
-            [Display(Name = "Last Name")]
+            [Display(Name = "Фамилия")]
             public string LastName { get; set; }
             [Display(Name = "Username")]
             public string Username { get; set; }
             [Phone]
-            [Display(Name = "Phone number")]
-            public string PhoneNumber { get; set; }
+            [Display(Name = "Номер телефона")]
+
+            public string Phone { get; set; }
+            [Display(Name = "Отчество")]
+            public string? Patronymic { get; set; }
+            [Display(Name = "Пол")]
+            public string? GenderName { get; set; }
+            [Display(Name = "Дата рождения")]
+            public DateTime? DataBirth { get; set; }
+            [Display(Name = "Паспортные данные")]
+            public int? PassportSeries { get; set; }
+            [Display(Name = "Адрес регистрации")]
+            public string? AdressReg { get; set; }
+            [Display(Name = "Адрес проживания")]
+            public string? AdressRes { get; set; }
+
+            [Display(Name = "СНИЛС")]
+            public int? Snils { get; set; }
+            [Display(Name = "Полис")]
+            public int? Polisy { get; set; }
+            [Display(Name = "Место работы")]
+            public string? PlaceWork { get; set; }
         }
 
         private async Task LoadAsync(ApplicationUser user)
@@ -68,17 +70,24 @@ namespace PatientCard.Areas.Identity.Pages.Account.Manage
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
-            var firstName = user.FirstName;
-            var lastName = user.LastName;
-            Username = userName;
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
                 Username = userName,
-                FirstName = firstName,
-                LastName = lastName
+                Phone = phoneNumber,
+                Patronymic = user.Patronymic,
+                GenderName = user.GenderName,
+                DataBirth = user.DataBirth,
+                PassportSeries = user.PassportSeries,
+                AdressReg = user.AdressReg,
+                AdressRes = user.AdressRes,
+                Snils = user.Snils,
+                Polisy = user.Polisy,
+                PlaceWork = user.PlaceWork
             };
         }
+
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -92,36 +101,115 @@ namespace PatientCard.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
+        //public async Task<IActionResult> OnPostAsync()
+        //{
+        //    var user = await _userManager.GetUserAsync(User);
+        //    var firstName = user.FirstName;
+        //    var lastName = user.LastName;
+        //    if (Input.FirstName != firstName)
+        //    {
+        //        user.FirstName = Input.FirstName;
+        //        await _userManager.UpdateAsync(user);
+        //    }
+        //    if (Input.LastName != lastName)
+        //    {
+        //        user.LastName = Input.LastName;
+        //        await _userManager.UpdateAsync(user);
+        //    }
+        //    if (user == null)
+        //    {
+        //        return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+        //    }
+
+        //    if (!ModelState.IsValid)
+        //    {
+        //        await LoadAsync(user);
+        //        return Page();
+        //    }
+
+        //    var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+        //    if (Input.Phone != phoneNumber)
+        //    {
+        //        var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.Phone);
+        //        if (!setPhoneResult.Succeeded)
+        //        {
+        //            StatusMessage = "Unexpected error when trying to set phone number.";
+        //            return RedirectToPage();
+        //        }
+        //    }
+
+        //    await _signInManager.RefreshSignInAsync(user);
+        //    StatusMessage = "Your profile has been updated";
+        //    return RedirectToPage();
+        //}
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await _userManager.GetUserAsync(User);
-            var firstName = user.FirstName;
-            var lastName = user.LastName;
-            if (Input.FirstName != firstName)
-            {
-                user.FirstName = Input.FirstName;
-                await _userManager.UpdateAsync(user);
-            }
-            if (Input.LastName != lastName)
-            {
-                user.LastName = Input.LastName;
-                await _userManager.UpdateAsync(user);
-            }
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            if (!ModelState.IsValid)
+            if (Input.FirstName != user.FirstName)
             {
-                await LoadAsync(user);
-                return Page();
+                user.FirstName = Input.FirstName;
+                await _userManager.UpdateAsync(user);
+            }
+            if (Input.LastName != user.LastName)
+            {
+                user.LastName = Input.LastName;
+                await _userManager.UpdateAsync(user);
+            }
+            if (Input.Patronymic != user.Patronymic)
+            {
+                user.Patronymic = Input.Patronymic;
+                await _userManager.UpdateAsync(user);
+            }
+            if (Input.GenderName != user.GenderName)
+            {
+                user.GenderName = Input.GenderName;
+                await _userManager.UpdateAsync(user);
+            }
+            if (Input.DataBirth != user.DataBirth)
+            {
+                user.DataBirth = Input.DataBirth;
+                await _userManager.UpdateAsync(user);
+            }
+            if (Input.PassportSeries != user.PassportSeries)
+            {
+                user.PassportSeries = Input.PassportSeries;
+                await _userManager.UpdateAsync(user);
+            }
+            if (Input.AdressReg != user.AdressReg)
+            {
+                user.AdressReg = Input.AdressReg;
+                await _userManager.UpdateAsync(user);
+            }
+            if (Input.AdressRes != user.AdressRes)
+            {
+                user.AdressRes = Input.AdressRes;
+                await _userManager.UpdateAsync(user);
+            }
+            if (Input.Snils != user.Snils)
+            {
+                user.Snils = Input.Snils;
+                await _userManager.UpdateAsync(user);
+            }
+            if (Input.Polisy != user.Polisy)
+            {
+                user.Polisy = Input.Polisy;
+                await _userManager.UpdateAsync(user);
+            }
+            if (Input.PlaceWork != user.PlaceWork)
+            {
+                user.PlaceWork = Input.PlaceWork;
+                await _userManager.UpdateAsync(user);
             }
 
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            if (Input.PhoneNumber != phoneNumber)
+            if (Input.Phone != phoneNumber)
             {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
+                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.Phone);
                 if (!setPhoneResult.Succeeded)
                 {
                     StatusMessage = "Unexpected error when trying to set phone number.";
@@ -130,8 +218,9 @@ namespace PatientCard.Areas.Identity.Pages.Account.Manage
             }
 
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your profile has been updated";
+            StatusMessage = "Данные успешно сохранены";
             return RedirectToPage();
         }
+
     }
 }
