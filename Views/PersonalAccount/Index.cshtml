@@ -35,65 +35,178 @@ ViewBag.Title = "Index";
     <li class="nav-item">
         <button class="nav-link rounded-0" data-tab="menu6" onclick="changeContent('menu6')">Уровень кислорода</button>
     </li>
+    <li class="nav-item">
+        <button class="nav-link rounded-0" data-tab="stydy" onclick="changeContent('stydy')">Исследовани</button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link rounded-0" data-tab="medicalCar" onclick="changeContent('medicalCar')">Скорая помощь</button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link rounded-0" data-tab="polyclinic" onclick="changeContent('polyclinic')">Поликлинический прием</button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link rounded-0" data-tab="operation" onclick="changeContent('operation')">Операции</button>
+    </li>
 </ul>
 <div class="tab-content">
     <div class="tab-pane container p-0" id="home">
-        <h5 class="text-uppercase p-2 text-center">Лист нетрудоспособности</h5>
-        @if (Model.DisabilitySheet != null)
-        {
-            <table class="table table-bordered table-striped">
-                <tr>
-                    <th>User</th>
-                    <td>@Model.DisabilitySheet.User.UserName</td>
-                </tr>
-                <tr>
-                    <th>Doctor</th>
-                    <td>@Model.DisabilitySheet.Doctor.FullNameDoctor</td>
-                </tr>
-                <tr>
-                    <th>From Date</th>
-                    <td>@Model.DisabilitySheet.FromDate</td>
-                </tr>
-            </table>
-        }
+        <div class="row">
+            @foreach (var disabilitySheet in Model.DisabilitySheet)
+            {
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">@disabilitySheet.User.FullName</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"><strong>Doctor:</strong> @disabilitySheet.Doctor.FullNameDoctor</p>
+                            <p class="card-text"><strong>From Date:</strong> @disabilitySheet.FromDate</p>
+                            <p class="card-text"><strong>To Date:</strong> @disabilitySheet.ToDate</p>
+                            <p class="card-text"><strong>Reason:</strong> @disabilitySheet.Reason</p>
+                            <p class="card-text"><strong>Date Of Singing:</strong> @disabilitySheet.DateOfSinging</p>
+                            <p class="card-text"><strong>Departament:</strong> @disabilitySheet.Departament.NameDepartament</p>
+                            <p class="card-text"><strong>Organization:</strong> @disabilitySheet.Organization.Name</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
     </div>
     <div class="tab-pane container p-0" id="menu1">
-        <h5 class="text-uppercase p-2 text-center">Анализы</h5>
-        @if (Model.Analyze != null)
-        {
-            <table class="table table-bordered table-striped">
-                <thead class="thead-dark text-white">
-                    <tr>
-                        <th>Date Analyzes</th>
-                        <th>Doctor</th>
-                        <th>Service</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>@Model.Analyze.DateAnalyzes</td>
-                        <td>@Model.Analyze.Doctor.FullNameDoctor</td>
-                        <td>@Model.Analyze.Service.NameService</td>
-                    </tr>
-                </tbody>
-            </table>
-        }
-        else
-        {
-            <p>No data available</p>
-        }
+        <div class="row">
+            @foreach (var analyze in Model.Analyze)
+            {
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">@analyze.User.FullName</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"><strong>Доктрор:</strong> @analyze.Doctor.FullNameDoctor</p>
+                            <p class="card-text"><strong>Организация:</strong> @analyze.Departament.NameDepartament</p>
+                            <p class="card-text"><strong>Отделение:</strong> @analyze.Organization.Name</p>
+                            <p class="card-text"><strong>Услуга:</strong> @analyze.Service.NameService</p>
+                            <p class="card-text"><strong>Дата:</strong> @analyze.DateAnalyzes</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
     </div>
+    <div class="tab-pane container p-0" id="medicalCar">
+        <div class="row">
+            @foreach (var medicalCar in Model.MedicalCar)
+            {
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">@medicalCar.User.FullName</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"><strong>Доктрор:</strong> @medicalCar.Doctor.FullNameDoctor</p>
+                            <p class="card-text"><strong>Дата:</strong> @medicalCar.DateMedicalCar</p>
+                            <p class="card-text"><strong>Место выезда:</strong> @medicalCar.PlaceExit</p>
+                            <p class="card-text"><strong>Причина выезда:</strong> @medicalCar.ReasonExit</p>
+                            <p class="card-text"><strong>Диагноз:</strong> @medicalCar.Diagnosis</p>
+                            <p class="card-text"><strong>Результат выезда:</strong> @medicalCar.ResultExit</p>
+                            <p class="card-text"><strong>Выданные документы:</strong> @medicalCar.IssueExit</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="tab-pane container p-0" id="operation">
+        <div class="row">
+            @foreach (var operation in Model.Operation)
+            {
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">@operation.User.FullName</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"><strong>Доктрор:</strong> @operation.Doctor.FullNameDoctor</p>
+                            <p class="card-text"><strong>Название операции:</strong> @operation.NameOperation</p>
+                            <p class="card-text"><strong>Дата:</strong> @operation.DateOperation</p>
+                            <p class="card-text"><strong>Организация:</strong> @operation.Departament.NameDepartament</p>
+                            <p class="card-text"><strong>Отделение:</strong> @operation.Organization.Name</p>
+                            <p class="card-text"><strong>Диагноз:</strong> @operation.DiagnosisOperation</p>
+                            <p class="card-text"><strong>Длительность:</strong> @operation.DurationOperation</p>
+                            <p class="card-text"><strong>Протокол:</strong> @operation.ProtocolOperation</p>
+                            @*<p class="card-text"><strong>Дата:</strong> @operation.Financing.IdFinancing</p>*@
+                            <p class="card-text"><strong>Финансирование:</strong> @(operation.Financing != null ? operation.Financing.FinancingName.ToString() : "Не указано")</p>
+                            <p class="card-text"><strong>Услуга:</strong> @operation.Service.NameService</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="tab-pane container p-0" id="polyclinic">
+        <div class="row">
+            @foreach (var polyclinic in Model.Polyclinic)
+            {
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">@polyclinic.User.FullName</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"><strong>Доктрор:</strong> @polyclinic.Doctor.FullNameDoctor</p>
+                            <p class="card-text"><strong>Дата:</strong> @polyclinic.Date</p>
+                            <p class="card-text"><strong>Организация:</strong> @polyclinic.Departament.NameDepartament</p>
+                            <p class="card-text"><strong>Отделение:</strong> @polyclinic.Organization.Name</p>
+                            <p class="card-text"><strong>Жалобы:</strong> @polyclinic.Complaints</p>
+                            <p class="card-text"><strong>Причина обращения:</strong> @polyclinic.Reason</p>
+                            <p class="card-text"><strong>Финансирование:</strong> @polyclinic.Financing.FinancingName</p>
+                            <p class="card-text"><strong>Состояние:</strong> @polyclinic.Conditions</p>
+                            <p class="card-text"><strong>Анамнез заболевания:</strong> @polyclinic.AnamnesisDisease</p>
+                            <p class="card-text"><strong>Диагноз:</strong> @polyclinic.Diagnosis</p>
+                            <p class="card-text"><strong>Рекоммендации:</strong> @polyclinic.Recommendation</p>
 
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="tab-pane container p-0" id="stydy">
+        <div class="row">
+            @foreach (var stydy in Model.Stydy)
+            {
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">@stydy.User.FullName</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"><strong>Доктрор:</strong> @stydy.Doctor.FullNameDoctor</p>
+                            <p class="card-text"><strong>Дата:</strong> @stydy.Date</p>
+                            <p class="card-text"><strong>Организация:</strong> @stydy.Departament.NameDepartament</p>
+                            <p class="card-text"><strong>Отделение:</strong> @stydy.Organization.Name</p>
+                            <p class="card-text"><strong>Номер:</strong> @stydy.Number</p>
+                            <p class="card-text"><strong>Сделано:</strong> @stydy.Done</p>
+                            <p class="card-text"><strong>Протокол:</strong> @stydy.Protocol</p>
+                            <p class="card-text"><strong>Заключение:</strong> @stydy.Conclusion</p>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
     <div class="tab-pane container p-0" id="menu2">
         <h5 class="text-uppercase p-2 text-center">Антропометрические данные</h5>
         <div class="text-right mb-2">
-            @Html.ActionLink("Добавить", "Create", "Anthropometries", null, new { @class = "btn btn-primary" })
+            <a href="@Url.Action("Create", "Anthropometries")" class="btn btn-primary">Добавить</a>
         </div>
         <table class="table table-bordered table-striped">
             <thead class="thead-dark text-white">
                 <tr>
                     <th>@Html.DisplayNameFor(m => Model.Anthropometry.FirstOrDefault().Value)</th>
                     <th>@Html.DisplayNameFor(m => Model.Anthropometry.FirstOrDefault().Date)</th>
+                    <th class="col-1" style="width: 222px;"></th>
                 </tr>
             </thead>
             <tbody>
@@ -102,25 +215,109 @@ ViewBag.Title = "Index";
                     <tr>
                         <td>@antr.Value</td>
                         <td>@antr.Date</td>
+                        <td class="col-1" style="width: 222px;">
+                            <a href="@Url.Action("Edit", "Anthropometries", new { id = antr.AnthropometryId })" class="btn btn-primary mr-2">Изменить</a>
+                            <a href="@Url.Action("Delete", "Anthropometries", new { id = antr.AnthropometryId })" class="btn btn-danger">Удалить</a>
+                        </td>
                     </tr>
                 }
             </tbody>
         </table>
     </div>
-    @*<div class="tab-pane container p-0" id="menu3">
+
+
+    <div class="tab-pane container p-0" id="menu3">
         <h5 class="text-uppercase p-2 text-center">Температура</h5>
-        <!-- add temperature chart here -->
+        <div class="text-right mb-2">
+            @Html.ActionLink("Добавить", "Create", "Temperatures", null, new { @class = "btn btn-primary" })
+        </div>
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark text-white">
+                <tr>
+                    <th>@Html.DisplayNameFor(m => Model.Temperature.FirstOrDefault().Value)</th>
+                    <th>@Html.DisplayNameFor(m => Model.Temperature.FirstOrDefault().Date)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var temp in Model.Temperature)
+                {
+                    <tr>
+                        <td>@temp.Value</td>
+                        <td>@temp.Date</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
+
     <div class="tab-pane container p-0 active" id="menu4">
         <h5 class="text-uppercase p-2 text-center">Давление</h5>
-        <!-- add blood pressure chart here -->
+        <div class="text-right mb-2">
+            @Html.ActionLink("Добавить", "Create", "Pressures", null, new { @class = "btn btn-primary" })
+        </div>
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark text-white">
+                <tr>
+                    <th>@Html.DisplayNameFor(m => Model.Pressure.FirstOrDefault().Value)</th>
+                    <th>@Html.DisplayNameFor(m => Model.Pressure.FirstOrDefault().Date)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var pres in Model.Pressure)
+                {
+                    <tr>
+                        <td>@pres.Value</td>
+                        <td>@pres.Date</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
+
     <div class="tab-pane container p-0" id="menu5">
         <h5 class="text-uppercase p-2 text-center">Уровень глюкозы</h5>
-        <!-- add glucose chart here -->
+        <div class="text-right mb-2">
+            @Html.ActionLink("Добавить", "Create", "Glucoses", null, new { @class = "btn btn-primary" })
+        </div>
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark text-white">
+                <tr>
+                    <th>@Html.DisplayNameFor(m => Model.Glucose.FirstOrDefault().Value)</th>
+                    <th>@Html.DisplayNameFor(m => Model.Glucose.FirstOrDefault().Date)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var gluc in Model.Glucose)
+                {
+                    <tr>
+                        <td>@gluc.Value</td>
+                        <td>@gluc.Date</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
     <div class="tab-pane container p-0" id="menu6">
         <h5 class="text-uppercase p-2 text-center">Уровень кислорода</h5>
-        <!-- add oxygen chart here -->
-    </div>*@
+        <div class="text-right mb-2">
+            @Html.ActionLink("Добавить", "Create", "Oxygens", null, new { @class = "btn btn-primary" })
+        </div>
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark text-white">
+                <tr>
+                    <th>@Html.DisplayNameFor(m => Model.Oxygen.FirstOrDefault().Value)</th>
+                    <th>@Html.DisplayNameFor(m => Model.Oxygen.FirstOrDefault().Date)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var oxy in Model.Oxygen)
+                {
+                    <tr>
+                        <td>@oxy.Value</td>
+                        <td>@oxy.Date</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -22,8 +23,34 @@ namespace PatientCard.Controllers
         // GET: Operations
         public async Task<IActionResult> Index()
         {
-            var patientCardContext = _context.Operation.Include(o => o.Departament).Include(o => o.Doctor).Include(o => o.Financing).Include(o => o.Organization).Include(o => o.Service).Include(o => o.User);
-            return View(await patientCardContext.ToListAsync());
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userRole = User.FindFirstValue(ClaimTypes.Role);
+
+            if (userRole == "Admin")
+            {
+                var operationContext = _context.Operation
+                    .Include(o => o.Departament)
+                    .Include(o => o.Doctor)
+                    .Include(o => o.Financing)
+                    .Include(o => o.Organization)
+                    .Include(o => o.Service)
+                    .Include(o => o.User);
+
+                return View(await operationContext.ToListAsync());
+            }
+            else
+            {
+                var operationContext = _context.Operation
+                    .Where(o => o.UserId == userId)
+                    .Include(o => o.Departament)
+                    .Include(o => o.Doctor)
+                    .Include(o => o.Financing)
+                    .Include(o => o.Organization)
+                    .Include(o => o.Service)
+                    .Include(o => o.User);
+
+                return View(await operationContext.ToListAsync());
+            }
         }
 
         // GET: Operations/Details/5
@@ -53,12 +80,12 @@ namespace PatientCard.Controllers
         // GET: Operations/Create
         public IActionResult Create()
         {
-            ViewData["IdDepartament"] = new SelectList(_context.Departament, "IdDepartament", "IdDepartament");
-            ViewData["IdDoctor"] = new SelectList(_context.Doctor, "IdDoctor", "IdDoctor");
-            ViewData["IdFinancing"] = new SelectList(_context.Financing, "IdFinancing", "IdFinancing");
-            ViewData["IdOrganization"] = new SelectList(_context.Organization, "IdOrganization", "IdOrganization");
-            ViewData["IdService"] = new SelectList(_context.Service, "IdService", "IdService");
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["IdDepartament"] = new SelectList(_context.Departament, "IdDepartament", "NameDepartament");
+            ViewData["IdDoctor"] = new SelectList(_context.Doctor, "IdDoctor", "FullNameDoctor");
+            ViewData["IdFinancing"] = new SelectList(_context.Financing, "IdFinancing", "FinancingName");
+            ViewData["IdOrganization"] = new SelectList(_context.Organization, "IdOrganization", "Name");
+            ViewData["IdService"] = new SelectList(_context.Service, "IdService", "NameService");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FullName");
             return View();
         }
 
@@ -67,7 +94,7 @@ namespace PatientCard.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdOperation,UserId,DateOperation,NameOperation,IdDepartament,IdOrganization,DiagnosisOperation,IdService,DurationOperation,ProtocolOperation,IdFinancing,IdDoctor")] Operation operation)
+        public async Task<IActionResult> Create([Bind("IdOperation,Number,UserId,DateOperation,NameOperation,IdDepartament,IdOrganization,DiagnosisOperation,IdService,DurationOperation,ProtocolOperation,IdFinancing,IdDoctor")] Operation operation)
         {
             if (ModelState.IsValid)
             {
@@ -97,12 +124,12 @@ namespace PatientCard.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdDepartament"] = new SelectList(_context.Departament, "IdDepartament", "IdDepartament", operation.IdDepartament);
-            ViewData["IdDoctor"] = new SelectList(_context.Doctor, "IdDoctor", "IdDoctor", operation.IdDoctor);
-            ViewData["IdFinancing"] = new SelectList(_context.Financing, "IdFinancing", "IdFinancing", operation.IdFinancing);
-            ViewData["IdOrganization"] = new SelectList(_context.Organization, "IdOrganization", "IdOrganization", operation.IdOrganization);
-            ViewData["IdService"] = new SelectList(_context.Service, "IdService", "IdService", operation.IdService);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", operation.UserId);
+            ViewData["IdDepartament"] = new SelectList(_context.Departament, "IdDepartament", "NameDepartament", operation.IdDepartament);
+            ViewData["IdDoctor"] = new SelectList(_context.Doctor, "IdDoctor", "FullNameDoctor", operation.IdDoctor);
+            ViewData["IdFinancing"] = new SelectList(_context.Financing, "IdFinancing", "FinancingName", operation.IdFinancing);
+            ViewData["IdOrganization"] = new SelectList(_context.Organization, "IdOrganization", "Name", operation.IdOrganization);
+            ViewData["IdService"] = new SelectList(_context.Service, "IdService", "NameService", operation.IdService);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FullName", operation.UserId);
             return View(operation);
         }
 
@@ -111,7 +138,7 @@ namespace PatientCard.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdOperation,UserId,DateOperation,NameOperation,IdDepartament,IdOrganization,DiagnosisOperation,IdService,DurationOperation,ProtocolOperation,IdFinancing,IdDoctor")] Operation operation)
+        public async Task<IActionResult> Edit(int id, [Bind("IdOperation,Number,UserId,DateOperation,NameOperation,IdDepartament,IdOrganization,DiagnosisOperation,IdService,DurationOperation,ProtocolOperation,IdFinancing,IdDoctor")] Operation operation)
         {
             if (id != operation.IdOperation)
             {

@@ -40,10 +40,6 @@
                 <span asp-validation-for="Reason" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="InspectionPolyclinicId" class="control-label"></label>
-                <select asp-for="InspectionPolyclinicId" class ="form-control" asp-items="ViewBag.InspectionPolyclinicId"></select>
-            </div>
-            <div class="form-group">
                 <label asp-for="IdFinancing" class="control-label"></label>
                 <select asp-for="IdFinancing" class ="form-control" asp-items="ViewBag.IdFinancing"></select>
             </div>
@@ -53,12 +49,23 @@
                 <span asp-validation-for="Conditions" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="IdAnalyze" class="control-label"></label>
-                <select asp-for="IdAnalyze" class ="form-control" asp-items="ViewBag.IdAnalyze"></select>
+                <label asp-for="AnamnesisDisease" class="control-label"></label>
+                <input asp-for="AnamnesisDisease" class="form-control" />
+                <span asp-validation-for="AnamnesisDisease" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="IdStydy" class="control-label"></label>
-                <select asp-for="IdStydy" class ="form-control" asp-items="ViewBag.IdStydy"></select>
+                <label asp-for="Diagnosis" class="control-label"></label>
+                <input asp-for="Diagnosis" class="form-control" />
+                <span asp-validation-for="Diagnosis" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Recommendation" class="control-label"></label>
+                <input asp-for="Recommendation" class="form-control" />
+                <span asp-validation-for="Recommendation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdDoctor" class="control-label"></label>
+                <select asp-for="IdDoctor" class ="form-control" asp-items="ViewBag.IdDoctor"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

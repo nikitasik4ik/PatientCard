@@ -15,12 +15,7 @@ namespace PatientCard.Models
         //[StringLength(20)]
         public string? CodeService { get; set; }
         public virtual ICollection<Analyze> Analyzes { get; set; } = new List<Analyze>();
-        public virtual ICollection<InspectionHospital> InspectionHospital { get; set; } = new List<InspectionHospital>();
-
-        public virtual ICollection<InspectionPolyclinic> InspectionPolyclinic { get; set; } = new List<InspectionPolyclinic>();
-
         public virtual ICollection<Operation> Operation { get; set; } = new List<Operation>();
 
-        public virtual ICollection<Reception> Reception { get; set; } = new List<Reception>();
     }
 }

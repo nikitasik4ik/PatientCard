@@ -1,0 +1,77 @@
+﻿@model IEnumerable<PatientCard.Models.DisabilitySheet>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.User)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Doctor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FromDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ToDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Departament)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Organization)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfSinging)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reason)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                    @Html.DisplayFor(modelItem => item.User.FullName)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Doctor.FullNameDoctor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FromDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ToDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Departament.NameDepartament)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Organization.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfSinging)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Reason)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdDisabilitySheet">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdDisabilitySheet">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdDisabilitySheet">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

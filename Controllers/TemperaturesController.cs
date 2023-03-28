@@ -67,7 +67,7 @@ namespace PatientCard.Controllers
             {
                 _context.Add(temperature);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "PersonalAccount");
             }
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", temperature.UserId);
             return View(temperature);
@@ -121,7 +121,7 @@ namespace PatientCard.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "PersonalAccount");
             }
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", temperature.UserId);
             return View(temperature);
@@ -162,7 +162,7 @@ namespace PatientCard.Controllers
             }
             
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "PersonalAccount");
         }
 
         private bool TemperatureExists(int id)

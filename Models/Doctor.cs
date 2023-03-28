@@ -18,9 +18,6 @@ namespace PatientCard.Models
 
         public virtual ICollection<DisabilitySheet> DisabilitySheet { get; set; } = new List<DisabilitySheet>();
 
-        public virtual ICollection<InspectionPolyclinic> InspectionPolyclinic { get; } = new List<InspectionPolyclinic>();
-        public virtual ICollection<InspectionHospital> InspectionHospital { get; } = new List<InspectionHospital>();
-        public virtual ICollection<Reception> Reception { get; set; } = new List<Reception>();
 
         public virtual ICollection<MedicalCar> MedicalCar { get; set; } = new List<MedicalCar>();
 

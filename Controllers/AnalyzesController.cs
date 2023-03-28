@@ -21,24 +21,43 @@ namespace PatientCard.Controllers
         }
 
         // GET: Analyzes
-        public async Task<IActionResult> Index()
-        {
-            var patientCardContext = _context.Analyze.Include(a => a.Departament).Include(a => a.Doctor).Include(a => a.Organization).
-                Include(a => a.Service).Include(a => a.User);
-            return View(await patientCardContext.ToListAsync());
-        }
         //public async Task<IActionResult> Index()
         //{
-        //    //var patientCardContext = _context.Hospital.Include(h => h.Departament).Include(h => h.InspectionHospital).Include(h => h.Operation).Include(h => h.Organization).Include(h => h.Reception).Include(h => h.User);
-        //    //return View(await patientCardContext.ToListAsync());
-        //    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // получаем Id текущего пользователя
-        //    var analyzes = await _context.Analyze
-        //        .Where(t => t.UserId == userId)
-        //        .Include(t => t.User)
-        //        .ToListAsync();
-
-        //    return View(analyzes);
+        //    var patientCardContext = _context.Analyze.Include(a => a.Departament).Include(a => a.Doctor).Include(a => a.Organization).Include(a => a.Service).Include(a => a.User);
+        //    return View(await patientCardContext.ToListAsync());
         //}
+        public async Task<IActionResult> Index()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userRole = User.FindFirstValue(ClaimTypes.Role);
+
+            if (userRole == "Admin")
+            {
+                var analyzes = await _context.Analyze
+                    .Include(a => a.Departament)
+                    .Include(a => a.Doctor)
+                    .Include(a => a.Organization)
+                    .Include(a => a.Service)
+                    .Include(a => a.User)
+                    .ToListAsync();
+
+                return View(analyzes);
+            }
+            else
+            {
+                var analyzes = await _context.Analyze
+                    .Where(a => a.UserId == userId)
+                    .Include(a => a.Departament)
+                    .Include(a => a.Doctor)
+                    .Include(a => a.Organization)
+                    .Include(a => a.Service)
+                    .Include(a => a.User)
+                    .ToListAsync();
+
+                return View(analyzes);
+            }
+        }
+
         // GET: Analyzes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -90,7 +109,7 @@ namespace PatientCard.Controllers
             ViewData["IdDoctor"] = new SelectList(_context.Doctor, "IdDoctor", "IdDoctor", analyze.IdDoctor);
             ViewData["IdOrganization"] = new SelectList(_context.Organization, "IdOrganization", "IdOrganization", analyze.IdOrganization);
             ViewData["IdService"] = new SelectList(_context.Service, "IdService", "IdService", analyze.IdService);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", analyze.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FullName", analyze.UserId);
             return View(analyze);
         }
 
@@ -107,11 +126,11 @@ namespace PatientCard.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdDepartament"] = new SelectList(_context.Departament, "IdDepartament", "IdDepartament", analyze.IdDepartament);
-            ViewData["IdDoctor"] = new SelectList(_context.Doctor, "IdDoctor", "IdDoctor", analyze.IdDoctor);
-            ViewData["IdOrganization"] = new SelectList(_context.Organization, "IdOrganization", "IdOrganization", analyze.IdOrganization);
-            ViewData["IdService"] = new SelectList(_context.Service, "IdService", "IdService", analyze.IdService);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", analyze.UserId);
+            ViewData["IdDepartament"] = new SelectList(_context.Departament, "IdDepartament", "NameDepartament", analyze.IdDepartament);
+            ViewData["IdDoctor"] = new SelectList(_context.Doctor, "IdDoctor", "FullNameDoctor", analyze.IdDoctor);
+            ViewData["IdOrganization"] = new SelectList(_context.Organization, "IdOrganization", "Name", analyze.IdOrganization);
+            ViewData["IdService"] = new SelectList(_context.Service, "IdService", "NameService", analyze.IdService);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FullName", analyze.UserId);
             return View(analyze);
         }
 
@@ -123,11 +142,30 @@ namespace PatientCard.Controllers
         public async Task<IActionResult> Edit(int id, [Bind("IdAnalyzes,IdDepartament,IdOrganization,IdService,DateAnalyzes,IdDoctor,UserId")] Analyze analyze)
         {
             if (id != analyze.IdAnalyzes)
-            {return NotFound();}
+            {
+                return NotFound();
+            }
+
             if (ModelState.IsValid)
-            {try{_context.Update(analyze);await _context.SaveChangesAsync();}catch (DbUpdateConcurrencyException){if (!AnalyzeExists(analyze.IdAnalyzes))
-                    {return NotFound();}else{throw;}}
-                return RedirectToAction(nameof(Index));}
+            {
+                try
+                {
+                    _context.Update(analyze);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!AnalyzeExists(analyze.IdAnalyzes))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
             ViewData["IdDepartament"] = new SelectList(_context.Departament, "IdDepartament", "IdDepartament", analyze.IdDepartament);
             ViewData["IdDoctor"] = new SelectList(_context.Doctor, "IdDoctor", "IdDoctor", analyze.IdDoctor);
             ViewData["IdOrganization"] = new SelectList(_context.Organization, "IdOrganization", "IdOrganization", analyze.IdOrganization);

@@ -69,7 +69,7 @@ namespace PatientCard.Controllers
             {
                 _context.Add(anthropometry);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "PersonalAccount");
             }
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", anthropometry.UserId);
             return View(anthropometry);
@@ -122,7 +122,7 @@ namespace PatientCard.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "PersonalAccount");
             }
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", anthropometry.UserId);
             return View(anthropometry);
@@ -163,7 +163,7 @@ namespace PatientCard.Controllers
             }
             
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "PersonalAccount");
         }
 
         private bool AnthropometryExists(int id)

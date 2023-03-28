@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
+using PatientCard.Constants;
 using PatientCard.Models;
 
 namespace PatientCard.Areas.Identity.Data
@@ -20,9 +21,12 @@ namespace PatientCard.Areas.Identity.Data
         [Column(TypeName = "nvarchar(100)")]
         public string? Patronymic { get; set; }
 
+        [NotMapped]
+        public string FullName => ToString();
+
         public override string ToString()
         {
-            return $"{FirstName} {LastName} {(Patronymic ?? "")}";
+            return $"{LastName} {FirstName} {(Patronymic ?? "")}";
         }
         public string? Phone { get; set; }
         public string? GenderName { get; set; }
@@ -44,19 +48,15 @@ namespace PatientCard.Areas.Identity.Data
         public ICollection<Analyze> Analyze { get; set; }  // свойство навигации
         public ICollection<Anthropometry> Anthropometry { get; set; }  // свойство навигации
         public ICollection<DisabilitySheet> DisabilitySheet { get; set; }  // свойство навигации
-        public ICollection<Hospital> Hospital { get; set; }  // свойство навигации
-        public ICollection<InspectionHospital> InspectionHospital { get; set; }  // свойство навигации
-        public ICollection<InspectionPolyclinic> InspectionPoliclinic { get; set; }  // свойство навигации
         public ICollection<MedicalCar> MedicalCar { get; set; }  // свойство навигации
         public ICollection<Operation> Operation { get; set; }  // свойство навигации
         public ICollection<Polyclinic> Polyclinic { get; set; }  // свойство навигации
-        public ICollection<Reception> Reception { get; set; }  // свойство навигации
         public ICollection<Recipe> Recipe { get; set; }  // свойство навигации
         public ICollection<Stydy> Stydy { get; set; }  // свойство навигации
         public ICollection<Glucose> Glucose { get; set; }  // свойство навигации
         public ICollection<Oxygen> Oxygen { get; set; }  // свойство навигации
         public ICollection<Pressure> Pressure { get; set; }  // свойство навигации
         public ICollection<Temperature> Temperature { get; set; }  // свойство навигации
-
+        //public ICollection<Role> Role { get; set; } // добавленное свойство
     }
 }

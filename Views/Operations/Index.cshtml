@@ -13,6 +13,9 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.Number)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.User)
             </th>
             <th>
@@ -52,7 +55,10 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.User.Id)
+                @Html.DisplayFor(modelItem => item.Number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.FullName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DateOperation)
@@ -61,16 +67,16 @@
                 @Html.DisplayFor(modelItem => item.NameOperation)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Departament.IdDepartament)
+                @Html.DisplayFor(modelItem => item.Departament.NameDepartament)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Organization.IdOrganization)
+                @Html.DisplayFor(modelItem => item.Organization.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DiagnosisOperation)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Service.IdService)
+                @Html.DisplayFor(modelItem => item.Service.NameService)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DurationOperation)
@@ -79,10 +85,10 @@
                 @Html.DisplayFor(modelItem => item.ProtocolOperation)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Financing.IdFinancing)
+                @Html.DisplayFor(modelItem => item.Financing.FinancingName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Doctor.IdDoctor)
+                @Html.DisplayFor(modelItem => item.Doctor.FullNameDoctor)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.IdOperation">Edit</a> |

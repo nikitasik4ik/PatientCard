@@ -25,22 +25,17 @@ namespace PatientCard.Models
         public string? Complaints { get; set; }
 
         public string? Reason { get; set; }
-        public int? InspectionPolyclinicId { get; set; }
-
-        public virtual InspectionPolyclinic? InspectionPolyclinic { get; set; }
         public int? IdFinancing { get; set; }
         [ForeignKey("IdFinancing")]
         public virtual Financing? Financing { get; set; }
 
         public string? Conditions { get; set; }
-
-        public int? IdAnalyze { get; set; }
-        [ForeignKey("IdAnalyze")]
-        public virtual Analyze? Analyze { get; set; }
-
-        public int? IdStydy { get; set; }
-        [ForeignKey("IdStydy")]
-        public virtual Stydy? Stydy { get; set; }
+        public string AnamnesisDisease { get; set; } = null!;
+        public string? Diagnosis { get; set; }
+        public string? Recommendation { get; set; }
+        public int? IdDoctor { get; set; }
+        [ForeignKey("IdDoctor")]
+        public virtual Doctor? Doctor { get; set; }
     }
 
 }

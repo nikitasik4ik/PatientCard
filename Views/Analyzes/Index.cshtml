@@ -4,42 +4,62 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Анализы</h1>
+<h1>Index</h1>
+
 <p>
-    <a class="btn btn-primary" asp-action="Create">Добавить</a>
+    <a asp-action="Create">Create New</a>
 </p>
-<table class="table table-striped">
-    <thead class="thead-dark">
+<table class="table">
+    <thead>
         <tr>
-            <th scope="col">Учреждение</th>
-            <th scope="col">Отделение</th>
-            <th scope="col">Услуга</th>
-            <th scope="col">Дата</th>
-            <th scope="col">Доктор</th>
-            <th scope="col">Имя</th>
-            <th scope="col">Фамилия</th>
-            <th scope="col">Действия</th>
+            <th>
+                @Html.DisplayNameFor(model => model.Departament)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Organization)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Service)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateAnalyzes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Doctor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User)
+            </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@Html.DisplayFor(modelItem => item.Departament.NameDepartament)</td>
-                <td>@Html.DisplayFor(modelItem => item.Organization.Name)</td>
-                <td>@Html.DisplayFor(modelItem => item.Service.NameService)</td>
-                <td>@Html.DisplayFor(modelItem => item.DateAnalyzes)</td>
-                <td>@Html.DisplayFor(modelItem => item.Doctor.FullNameDoctor)</td>
-                <td>@Html.DisplayFor(modelItem => item.User.FirstName)</td>
-                <td>@Html.DisplayFor(modelItem => item.User.LastName)</td>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Departament.NameDepartament)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Organization.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Service.NameService)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateAnalyzes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Doctor.FullNameDoctor)
+            </td>
                 <td>
-                    <div class="btn-group" role="group">
-                        <a class="btn btn-info" asp-action="Details" asp-route-id="@item.IdAnalyzes">Детали</a>
-                        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.IdAnalyzes">Редактировать</a>
-                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.IdAnalyzes">Удалить</a>
-                    </div>
+                    @Html.DisplayFor(modelItem => item.User.FullName)
                 </td>
-            </tr>
-        }
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdAnalyzes">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdAnalyzes">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdAnalyzes">Delete</a>
+            </td>
+        </tr>
+}
     </tbody>
 </table>

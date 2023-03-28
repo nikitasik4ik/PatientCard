@@ -32,8 +32,6 @@ namespace PatientCard.Models
         [ForeignKey("IdDoctor")]
         public virtual Doctor? Doctor { get; set; }
 
-        public virtual ICollection<Polyclinic> Polyclinics { get; set; } = new List<Polyclinic>();
-        public virtual ICollection<Reception> Reception { get; set; } = new List<Reception>();
     }
 }
 

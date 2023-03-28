@@ -54,21 +54,8 @@
                     </div>
                 </div>
 
-                <!-- Поисковик  -->
-                <div class="sidebar-search">
-                    <div>
-                        <div class="input-group">
-                            <input type="text" class="form-control search-menu" placeholder="Search...">
-                            <div class="input-group-append">
-                                <span class="input-group-text">
-                                    <i class="fa fa-search" aria-hidden="true"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- sidebar-search  -->
-                <!--Боковое меню справочники-->
+                <!--Боковое меню справочники
+                
                 <div class="sidebar-menu">
                     <ul>
                         <li class="header-menu">
@@ -165,8 +152,87 @@
                                 </div>
                         </li>
                     </ul>
-                </div>
+                </div>-->
                 <!-- sidebar-menu  -->
+
+                <div class="sidebar-menu">
+                    <ul>
+                        <li class="header-menu">
+                            <span>Основные модели</span>
+                        </li>
+                        @if (User.IsInRole("Admin")) // проверяем роль пользователя
+                        {
+                <li class="sidebar-dropdown">
+                    <a href="#">
+                        <i class="far fa-gem"></i>
+                        <span>Справочники</span>
+                    </a>
+                    <div class="sidebar-submenu">
+                        <ul>
+                                        <li>
+                                            @Html.ActionLink("Анализы", "Index", "Analyzes")
+                                        </li>
+                                        <li>
+                                            @Html.ActionLink("Организация", "Index", "Departaments")
+                                        </li>
+                                        <li>
+                                            @Html.ActionLink("Лист нетрудоспособности", "Index", "DisabilitySheets")
+                                        </li>
+                                        <li>
+                                            @Html.ActionLink("Доктора", "Index", "Doctors")
+                                        </li>
+                                        <li>
+                                            @Html.ActionLink("Финансирование", "Index", "Financings")
+                                        </li>
+                                        @*<li>
+                                    @Html.ActionLink("Осмотр в больнице", "Index", "InspectionHospitals")
+                                    </li>
+                                    <li>
+                                    @Html.ActionLink("Осмотр в поликлиннике", "Index", "InspectionPolyclinics")
+                                    </li>*@
+                                        <li>
+                                            @Html.ActionLink("Скорая помошь", "Index", "MedicalCars")
+                                        </li>
+                                        @*<li>
+                                    @Html.ActionLink("Операции", "Index", "Operations")
+                                    </li>*@
+                                        <li>
+                                            @Html.ActionLink("Отделения", "Index", "Organizations")
+                                        </li>
+                                        @*<li>
+                                    @Html.ActionLink("Больничный прием", "Index", "Receptions")
+                                    </li>*@
+                                        <li>
+                                            @Html.ActionLink("Рецепты", "Index", "Recipes")
+                                        </li>
+                                        <li>
+                                            @Html.ActionLink("Услуги", "Index", "Services")
+                                        </li>
+                                        <li>
+                                            @Html.ActionLink("Исследования", "Index", "Stydies")
+                                        </li>
+                                        <li>
+                                            @Html.ActionLink("Пациенты", "Index", "Users")
+                                        </li>
+                                        <li>
+                                            @Html.ActionLink("Поликлиника", "Index", "Polyclinics")
+                                        </li>
+                                        <li>
+                                            @Html.ActionLink("Диспансеризация", "Index", "Hospitals")
+                                        </li>
+                                    </ul>
+                    </div>
+                </li>
+                        }
+                        else
+                        {
+                <li>
+                                @Html.ActionLink("Мой профиль", "Index", "PersonalAccount")
+                </li>
+                        }
+                    </ul>
+                </div>
+
             </div>
             <!-- Кнопки внизу -->
             <div class="sidebar-footer">

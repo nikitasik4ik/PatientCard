@@ -31,19 +31,22 @@
                 @Html.DisplayNameFor(model => model.Reason)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.InspectionPolyclinic)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Financing)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Conditions)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Analyze)
+                @Html.DisplayNameFor(model => model.AnamnesisDisease)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Stydy)
+                @Html.DisplayNameFor(model => model.Diagnosis)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Recommendation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Doctor)
             </th>
             <th></th>
         </tr>
@@ -52,16 +55,16 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.User.Id)
+                @Html.DisplayFor(modelItem => item.User.FullName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Departament.IdDepartament)
+                @Html.DisplayFor(modelItem => item.Departament.NameDepartament)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Organization.IdOrganization)
+                @Html.DisplayFor(modelItem => item.Organization.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Complaints)
@@ -70,19 +73,22 @@
                 @Html.DisplayFor(modelItem => item.Reason)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.InspectionPolyclinic.IdInspectionPoliclinic)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Financing.IdFinancing)
+                @Html.DisplayFor(modelItem => item.Financing.FinancingName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Conditions)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Analyze.IdAnalyzes)
+                @Html.DisplayFor(modelItem => item.AnamnesisDisease)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Stydy.IdStydy)
+                @Html.DisplayFor(modelItem => item.Diagnosis)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Recommendation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Doctor.FullNameDoctor)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.IdPolyclinic">Edit</a> |

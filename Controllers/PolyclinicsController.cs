@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -22,9 +23,34 @@ namespace PatientCard.Controllers
         // GET: Polyclinics
         public async Task<IActionResult> Index()
         {
-            var patientCardContext = _context.Polyclinic.Include(p => p.Analyze).Include(p => p.Departament).Include(p => p.Financing).Include(p => p.InspectionPolyclinic).Include(p => p.Organization).Include(p => p.Stydy).Include(p => p.User);
-            return View(await patientCardContext.ToListAsync());
+            var userRole = User.FindFirstValue(ClaimTypes.Role);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (userRole == "Admin")
+            {
+                var polyclinicContext = _context.Polyclinic
+                    .Include(p => p.Departament)
+                    .Include(p => p.Doctor)
+                    .Include(p => p.Financing)
+                    .Include(p => p.Organization)
+                    .Include(p => p.User);
+
+                return View(await polyclinicContext.ToListAsync());
+            }
+            else
+            {
+                var polyclinicContext = _context.Polyclinic
+                    .Where(p => p.UserId == userId)
+                    .Include(p => p.Departament)
+                    .Include(p => p.Doctor)
+                    .Include(p => p.Financing)
+                    .Include(p => p.Organization)
+                    .Include(p => p.User);
+
+                return View(await polyclinicContext.ToListAsync());
+            }
         }
+
 
         // GET: Polyclinics/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -35,12 +61,10 @@ namespace PatientCard.Controllers
             }
 
             var polyclinic = await _context.Polyclinic
-                .Include(p => p.Analyze)
                 .Include(p => p.Departament)
+                .Include(p => p.Doctor)
                 .Include(p => p.Financing)
-                .Include(p => p.InspectionPolyclinic)
                 .Include(p => p.Organization)
-                .Include(p => p.Stydy)
                 .Include(p => p.User)
                 .FirstOrDefaultAsync(m => m.IdPolyclinic == id);
             if (polyclinic == null)
@@ -54,13 +78,11 @@ namespace PatientCard.Controllers
         // GET: Polyclinics/Create
         public IActionResult Create()
         {
-            ViewData["IdAnalyze"] = new SelectList(_context.Analyze, "IdAnalyzes", "IdAnalyzes");
-            ViewData["IdDepartament"] = new SelectList(_context.Departament, "IdDepartament", "IdDepartament");
-            ViewData["IdFinancing"] = new SelectList(_context.Financing, "IdFinancing", "IdFinancing");
-            ViewData["InspectionPolyclinicId"] = new SelectList(_context.InspectionPoliclinics, "IdInspectionPoliclinic", "IdInspectionPoliclinic");
-            ViewData["IdOrganization"] = new SelectList(_context.Organization, "IdOrganization", "IdOrganization");
-            ViewData["IdStydy"] = new SelectList(_context.Stydy, "IdStydy", "IdStydy");
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["IdDepartament"] = new SelectList(_context.Departament, "IdDepartament", "NameDepartament");
+            ViewData["IdDoctor"] = new SelectList(_context.Doctor, "IdDoctor", "FullNameDoctor");
+            ViewData["IdFinancing"] = new SelectList(_context.Financing, "IdFinancing", "FinancingName");
+            ViewData["IdOrganization"] = new SelectList(_context.Organization, "IdOrganization", "Name");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FullName");
             return View();
         }
 
@@ -69,7 +91,7 @@ namespace PatientCard.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdPolyclinic,UserId,Date,IdDepartament,IdOrganization,Complaints,Reason,InspectionPolyclinicId,IdFinancing,Conditions,IdAnalyze,IdStydy")] Polyclinic polyclinic)
+        public async Task<IActionResult> Create([Bind("IdPolyclinic,UserId,Date,IdDepartament,IdOrganization,Complaints,Reason,IdFinancing,Conditions,AnamnesisDisease,Diagnosis,Recommendation,IdDoctor")] Polyclinic polyclinic)
         {
             if (ModelState.IsValid)
             {
@@ -77,12 +99,10 @@ namespace PatientCard.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdAnalyze"] = new SelectList(_context.Analyze, "IdAnalyzes", "IdAnalyzes", polyclinic.IdAnalyze);
             ViewData["IdDepartament"] = new SelectList(_context.Departament, "IdDepartament", "IdDepartament", polyclinic.IdDepartament);
+            ViewData["IdDoctor"] = new SelectList(_context.Doctor, "IdDoctor", "IdDoctor", polyclinic.IdDoctor);
             ViewData["IdFinancing"] = new SelectList(_context.Financing, "IdFinancing", "IdFinancing", polyclinic.IdFinancing);
-            ViewData["InspectionPolyclinicId"] = new SelectList(_context.InspectionPoliclinics, "IdInspectionPoliclinic", "IdInspectionPoliclinic", polyclinic.InspectionPolyclinicId);
             ViewData["IdOrganization"] = new SelectList(_context.Organization, "IdOrganization", "IdOrganization", polyclinic.IdOrganization);
-            ViewData["IdStydy"] = new SelectList(_context.Stydy, "IdStydy", "IdStydy", polyclinic.IdStydy);
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", polyclinic.UserId);
             return View(polyclinic);
         }
@@ -100,13 +120,11 @@ namespace PatientCard.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdAnalyze"] = new SelectList(_context.Analyze, "IdAnalyzes", "IdAnalyzes", polyclinic.IdAnalyze);
-            ViewData["IdDepartament"] = new SelectList(_context.Departament, "IdDepartament", "IdDepartament", polyclinic.IdDepartament);
-            ViewData["IdFinancing"] = new SelectList(_context.Financing, "IdFinancing", "IdFinancing", polyclinic.IdFinancing);
-            ViewData["InspectionPolyclinicId"] = new SelectList(_context.InspectionPoliclinics, "IdInspectionPoliclinic", "IdInspectionPoliclinic", polyclinic.InspectionPolyclinicId);
-            ViewData["IdOrganization"] = new SelectList(_context.Organization, "IdOrganization", "IdOrganization", polyclinic.IdOrganization);
-            ViewData["IdStydy"] = new SelectList(_context.Stydy, "IdStydy", "IdStydy", polyclinic.IdStydy);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", polyclinic.UserId);
+            ViewData["IdDepartament"] = new SelectList(_context.Departament, "IdDepartament", "NameDepartament", polyclinic.IdDepartament);
+            ViewData["IdDoctor"] = new SelectList(_context.Doctor, "IdDoctor", "FullNameDoctor", polyclinic.IdDoctor);
+            ViewData["IdFinancing"] = new SelectList(_context.Financing, "IdFinancing", "FinancingName", polyclinic.IdFinancing);
+            ViewData["IdOrganization"] = new SelectList(_context.Organization, "IdOrganization", "Name", polyclinic.IdOrganization);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FullName", polyclinic.UserId);
             return View(polyclinic);
         }
 
@@ -115,7 +133,7 @@ namespace PatientCard.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdPolyclinic,UserId,Date,IdDepartament,IdOrganization,Complaints,Reason,InspectionPolyclinicId,IdFinancing,Conditions,IdAnalyze,IdStydy")] Polyclinic polyclinic)
+        public async Task<IActionResult> Edit(int id, [Bind("IdPolyclinic,UserId,Date,IdDepartament,IdOrganization,Complaints,Reason,IdFinancing,Conditions,AnamnesisDisease,Diagnosis,Recommendation,IdDoctor")] Polyclinic polyclinic)
         {
             if (id != polyclinic.IdPolyclinic)
             {
@@ -142,12 +160,10 @@ namespace PatientCard.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdAnalyze"] = new SelectList(_context.Analyze, "IdAnalyzes", "IdAnalyzes", polyclinic.IdAnalyze);
             ViewData["IdDepartament"] = new SelectList(_context.Departament, "IdDepartament", "IdDepartament", polyclinic.IdDepartament);
+            ViewData["IdDoctor"] = new SelectList(_context.Doctor, "IdDoctor", "IdDoctor", polyclinic.IdDoctor);
             ViewData["IdFinancing"] = new SelectList(_context.Financing, "IdFinancing", "IdFinancing", polyclinic.IdFinancing);
-            ViewData["InspectionPolyclinicId"] = new SelectList(_context.InspectionPoliclinics, "IdInspectionPoliclinic", "IdInspectionPoliclinic", polyclinic.InspectionPolyclinicId);
             ViewData["IdOrganization"] = new SelectList(_context.Organization, "IdOrganization", "IdOrganization", polyclinic.IdOrganization);
-            ViewData["IdStydy"] = new SelectList(_context.Stydy, "IdStydy", "IdStydy", polyclinic.IdStydy);
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", polyclinic.UserId);
             return View(polyclinic);
         }
@@ -161,12 +177,10 @@ namespace PatientCard.Controllers
             }
 
             var polyclinic = await _context.Polyclinic
-                .Include(p => p.Analyze)
                 .Include(p => p.Departament)
+                .Include(p => p.Doctor)
                 .Include(p => p.Financing)
-                .Include(p => p.InspectionPolyclinic)
                 .Include(p => p.Organization)
-                .Include(p => p.Stydy)
                 .Include(p => p.User)
                 .FirstOrDefaultAsync(m => m.IdPolyclinic == id);
             if (polyclinic == null)

@@ -23,8 +23,6 @@ namespace PatientCard.Models
         [ForeignKey("IdDoctor")]
         public virtual Doctor? Doctor { get; set; }
         public ApplicationUser? User { get; set; }  // свойство навигации
-
-        public virtual ICollection<Polyclinic> Polyclinic { get; set; } = new List<Polyclinic>();
-        public virtual ICollection<Reception> Receptions { get; set; } = new List<Reception>();
+        
     }
 }

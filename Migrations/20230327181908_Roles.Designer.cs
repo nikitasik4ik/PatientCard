@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PatientCard.Data;
 
@@ -11,9 +12,11 @@ using PatientCard.Data;
 namespace PatientCard.Migrations
 {
     [DbContext(typeof(PatientCardContext))]
-    partial class PatientCardContextModelSnapshot : ModelSnapshot
+    [Migration("20230327181908_Roles")]
+    partial class Roles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -452,6 +455,149 @@ namespace PatientCard.Migrations
                     b.ToTable("Glucose");
                 });
 
+            modelBuilder.Entity("PatientCard.Models.Hospital", b =>
+                {
+                    b.Property<int>("IdHospital")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdHospital"));
+
+                    b.Property<DateTime?>("DateDischarge")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateReceipt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("IdDepartament")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdOperation")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdOrganization")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdReception")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("InspectionHospitalId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Number")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("Ward")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdHospital");
+
+                    b.HasIndex("IdDepartament");
+
+                    b.HasIndex("IdOperation");
+
+                    b.HasIndex("IdOrganization");
+
+                    b.HasIndex("IdReception");
+
+                    b.HasIndex("InspectionHospitalId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Hospital");
+                });
+
+            modelBuilder.Entity("PatientCard.Models.InspectionHospital", b =>
+                {
+                    b.Property<int>("IdInspectionHospital")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdInspectionHospital"));
+
+                    b.Property<string>("Complaint")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("IdDepartament")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdDoctor")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdService")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Inspection")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InspectionPlan")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("IdInspectionHospital");
+
+                    b.HasIndex("IdDepartament");
+
+                    b.HasIndex("IdDoctor");
+
+                    b.HasIndex("IdService");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("InspectionHospital");
+                });
+
+            modelBuilder.Entity("PatientCard.Models.InspectionPolyclinic", b =>
+                {
+                    b.Property<int>("IdInspectionPoliclinic")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdInspectionPoliclinic"));
+
+                    b.Property<string>("AnamnesisDisease")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Complaints")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Diagnosis")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("IdDepartament")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdDoctor")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdService")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Recommendation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("IdInspectionPoliclinic");
+
+                    b.HasIndex("IdDepartament");
+
+                    b.HasIndex("IdDoctor");
+
+                    b.HasIndex("IdService");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("InspectionPoliclinics");
+                });
+
             modelBuilder.Entity("PatientCard.Models.MedicalCar", b =>
                 {
                     b.Property<int>("IdMedicalCar")
@@ -526,9 +672,6 @@ namespace PatientCard.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("NameOperation")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Number")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProtocolOperation")
@@ -607,10 +750,6 @@ namespace PatientCard.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdPolyclinic"));
 
-                    b.Property<string>("AnamnesisDisease")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Complaints")
                         .HasColumnType("nvarchar(max)");
 
@@ -620,13 +759,10 @@ namespace PatientCard.Migrations
                     b.Property<DateTime?>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Diagnosis")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("IdDepartament")
+                    b.Property<int?>("IdAnalyze")
                         .HasColumnType("int");
 
-                    b.Property<int?>("IdDoctor")
+                    b.Property<int?>("IdDepartament")
                         .HasColumnType("int");
 
                     b.Property<int?>("IdFinancing")
@@ -635,10 +771,13 @@ namespace PatientCard.Migrations
                     b.Property<int?>("IdOrganization")
                         .HasColumnType("int");
 
-                    b.Property<string>("Reason")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("IdStydy")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Recommendation")
+                    b.Property<int?>("InspectionPolyclinicId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Reason")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
@@ -646,13 +785,17 @@ namespace PatientCard.Migrations
 
                     b.HasKey("IdPolyclinic");
 
-                    b.HasIndex("IdDepartament");
+                    b.HasIndex("IdAnalyze");
 
-                    b.HasIndex("IdDoctor");
+                    b.HasIndex("IdDepartament");
 
                     b.HasIndex("IdFinancing");
 
                     b.HasIndex("IdOrganization");
+
+                    b.HasIndex("IdStydy");
+
+                    b.HasIndex("InspectionPolyclinicId");
 
                     b.HasIndex("UserId");
 
@@ -681,6 +824,67 @@ namespace PatientCard.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Pressure");
+                });
+
+            modelBuilder.Entity("PatientCard.Models.Reception", b =>
+                {
+                    b.Property<int>("IdReception")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdReception"));
+
+                    b.Property<string>("AnamnesisDisease")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AnamnesisLife")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Complaints")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Diagnosis")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("IdAnalyze")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdDepartament")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdDoctor")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdService")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdStydy")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TreatmentPlan")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("IdReception");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("IdAnalyze");
+
+                    b.HasIndex("IdDepartament");
+
+                    b.HasIndex("IdDoctor");
+
+                    b.HasIndex("IdService");
+
+                    b.HasIndex("IdStydy");
+
+                    b.ToTable("Reception");
                 });
 
             modelBuilder.Entity("PatientCard.Models.Recipe", b =>
@@ -979,6 +1183,99 @@ namespace PatientCard.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("PatientCard.Models.Hospital", b =>
+                {
+                    b.HasOne("PatientCard.Models.Departament", "Departament")
+                        .WithMany("Hospital")
+                        .HasForeignKey("IdDepartament");
+
+                    b.HasOne("PatientCard.Models.Operation", "Operation")
+                        .WithMany("Hospital")
+                        .HasForeignKey("IdOperation");
+
+                    b.HasOne("PatientCard.Models.Organization", "Organization")
+                        .WithMany("Hospitals")
+                        .HasForeignKey("IdOrganization");
+
+                    b.HasOne("PatientCard.Models.Reception", "Reception")
+                        .WithMany("Hospital")
+                        .HasForeignKey("IdReception");
+
+                    b.HasOne("PatientCard.Models.InspectionHospital", "InspectionHospital")
+                        .WithMany("Hospital")
+                        .HasForeignKey("InspectionHospitalId");
+
+                    b.HasOne("PatientCard.Areas.Identity.Data.ApplicationUser", "User")
+                        .WithMany("Hospital")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Departament");
+
+                    b.Navigation("InspectionHospital");
+
+                    b.Navigation("Operation");
+
+                    b.Navigation("Organization");
+
+                    b.Navigation("Reception");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("PatientCard.Models.InspectionHospital", b =>
+                {
+                    b.HasOne("PatientCard.Models.Departament", "Departament")
+                        .WithMany("InspectionHospital")
+                        .HasForeignKey("IdDepartament");
+
+                    b.HasOne("PatientCard.Models.Doctor", "Doctor")
+                        .WithMany("InspectionHospital")
+                        .HasForeignKey("IdDoctor");
+
+                    b.HasOne("PatientCard.Models.Service", "Service")
+                        .WithMany("InspectionHospital")
+                        .HasForeignKey("IdService");
+
+                    b.HasOne("PatientCard.Areas.Identity.Data.ApplicationUser", "User")
+                        .WithMany("InspectionHospital")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Departament");
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Service");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("PatientCard.Models.InspectionPolyclinic", b =>
+                {
+                    b.HasOne("PatientCard.Models.Departament", "Departament")
+                        .WithMany("InspectionPolyclinic")
+                        .HasForeignKey("IdDepartament");
+
+                    b.HasOne("PatientCard.Models.Doctor", "Doctor")
+                        .WithMany("InspectionPolyclinic")
+                        .HasForeignKey("IdDoctor");
+
+                    b.HasOne("PatientCard.Models.Service", "Service")
+                        .WithMany("InspectionPolyclinic")
+                        .HasForeignKey("IdService");
+
+                    b.HasOne("PatientCard.Areas.Identity.Data.ApplicationUser", "User")
+                        .WithMany("InspectionPoliclinic")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Departament");
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Service");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("PatientCard.Models.MedicalCar", b =>
                 {
                     b.HasOne("PatientCard.Models.Doctor", "Doctor")
@@ -1053,13 +1350,13 @@ namespace PatientCard.Migrations
 
             modelBuilder.Entity("PatientCard.Models.Polyclinic", b =>
                 {
+                    b.HasOne("PatientCard.Models.Analyze", "Analyze")
+                        .WithMany("Polyclinic")
+                        .HasForeignKey("IdAnalyze");
+
                     b.HasOne("PatientCard.Models.Departament", "Departament")
                         .WithMany("Polyclinic")
                         .HasForeignKey("IdDepartament");
-
-                    b.HasOne("PatientCard.Models.Doctor", "Doctor")
-                        .WithMany()
-                        .HasForeignKey("IdDoctor");
 
                     b.HasOne("PatientCard.Models.Financing", "Financing")
                         .WithMany("Polyclinic")
@@ -1069,17 +1366,29 @@ namespace PatientCard.Migrations
                         .WithMany("Polyclinic")
                         .HasForeignKey("IdOrganization");
 
+                    b.HasOne("PatientCard.Models.Stydy", "Stydy")
+                        .WithMany("Polyclinics")
+                        .HasForeignKey("IdStydy");
+
+                    b.HasOne("PatientCard.Models.InspectionPolyclinic", "InspectionPolyclinic")
+                        .WithMany("Polyclinics")
+                        .HasForeignKey("InspectionPolyclinicId");
+
                     b.HasOne("PatientCard.Areas.Identity.Data.ApplicationUser", "User")
                         .WithMany("Polyclinic")
                         .HasForeignKey("UserId");
 
-                    b.Navigation("Departament");
+                    b.Navigation("Analyze");
 
-                    b.Navigation("Doctor");
+                    b.Navigation("Departament");
 
                     b.Navigation("Financing");
 
+                    b.Navigation("InspectionPolyclinic");
+
                     b.Navigation("Organization");
+
+                    b.Navigation("Stydy");
 
                     b.Navigation("User");
                 });
@@ -1091,6 +1400,43 @@ namespace PatientCard.Migrations
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("PatientCard.Models.Reception", b =>
+                {
+                    b.HasOne("PatientCard.Areas.Identity.Data.ApplicationUser", null)
+                        .WithMany("Reception")
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("PatientCard.Models.Analyze", "Analyze")
+                        .WithMany("Receptions")
+                        .HasForeignKey("IdAnalyze");
+
+                    b.HasOne("PatientCard.Models.Departament", "Departament")
+                        .WithMany("Reception")
+                        .HasForeignKey("IdDepartament");
+
+                    b.HasOne("PatientCard.Models.Doctor", "Doctor")
+                        .WithMany("Reception")
+                        .HasForeignKey("IdDoctor");
+
+                    b.HasOne("PatientCard.Models.Service", "Service")
+                        .WithMany("Reception")
+                        .HasForeignKey("IdService");
+
+                    b.HasOne("PatientCard.Models.Stydy", "Stydy")
+                        .WithMany("Reception")
+                        .HasForeignKey("IdStydy");
+
+                    b.Navigation("Analyze");
+
+                    b.Navigation("Departament");
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Service");
+
+                    b.Navigation("Stydy");
                 });
 
             modelBuilder.Entity("PatientCard.Models.Recipe", b =>
@@ -1169,6 +1515,12 @@ namespace PatientCard.Migrations
 
                     b.Navigation("Glucose");
 
+                    b.Navigation("Hospital");
+
+                    b.Navigation("InspectionHospital");
+
+                    b.Navigation("InspectionPoliclinic");
+
                     b.Navigation("MedicalCar");
 
                     b.Navigation("Operation");
@@ -1179,11 +1531,20 @@ namespace PatientCard.Migrations
 
                     b.Navigation("Pressure");
 
+                    b.Navigation("Reception");
+
                     b.Navigation("Recipe");
 
                     b.Navigation("Stydy");
 
                     b.Navigation("Temperature");
+                });
+
+            modelBuilder.Entity("PatientCard.Models.Analyze", b =>
+                {
+                    b.Navigation("Polyclinic");
+
+                    b.Navigation("Receptions");
                 });
 
             modelBuilder.Entity("PatientCard.Models.Departament", b =>
@@ -1192,9 +1553,17 @@ namespace PatientCard.Migrations
 
                     b.Navigation("DisabilitySheet");
 
+                    b.Navigation("Hospital");
+
+                    b.Navigation("InspectionHospital");
+
+                    b.Navigation("InspectionPolyclinic");
+
                     b.Navigation("Operation");
 
                     b.Navigation("Polyclinic");
+
+                    b.Navigation("Reception");
 
                     b.Navigation("Stydy");
                 });
@@ -1205,9 +1574,15 @@ namespace PatientCard.Migrations
 
                     b.Navigation("DisabilitySheet");
 
+                    b.Navigation("InspectionHospital");
+
+                    b.Navigation("InspectionPolyclinic");
+
                     b.Navigation("MedicalCar");
 
                     b.Navigation("Operation");
+
+                    b.Navigation("Reception");
 
                     b.Navigation("Recipe");
 
@@ -1221,11 +1596,28 @@ namespace PatientCard.Migrations
                     b.Navigation("Polyclinic");
                 });
 
+            modelBuilder.Entity("PatientCard.Models.InspectionHospital", b =>
+                {
+                    b.Navigation("Hospital");
+                });
+
+            modelBuilder.Entity("PatientCard.Models.InspectionPolyclinic", b =>
+                {
+                    b.Navigation("Polyclinics");
+                });
+
+            modelBuilder.Entity("PatientCard.Models.Operation", b =>
+                {
+                    b.Navigation("Hospital");
+                });
+
             modelBuilder.Entity("PatientCard.Models.Organization", b =>
                 {
                     b.Navigation("Analyzes");
 
                     b.Navigation("DisabilitySheet");
+
+                    b.Navigation("Hospitals");
 
                     b.Navigation("Operation");
 
@@ -1234,11 +1626,29 @@ namespace PatientCard.Migrations
                     b.Navigation("Stydy");
                 });
 
+            modelBuilder.Entity("PatientCard.Models.Reception", b =>
+                {
+                    b.Navigation("Hospital");
+                });
+
             modelBuilder.Entity("PatientCard.Models.Service", b =>
                 {
                     b.Navigation("Analyzes");
 
+                    b.Navigation("InspectionHospital");
+
+                    b.Navigation("InspectionPolyclinic");
+
                     b.Navigation("Operation");
+
+                    b.Navigation("Reception");
+                });
+
+            modelBuilder.Entity("PatientCard.Models.Stydy", b =>
+                {
+                    b.Navigation("Polyclinics");
+
+                    b.Navigation("Reception");
                 });
 #pragma warning restore 612, 618
         }

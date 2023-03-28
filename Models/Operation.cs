@@ -9,6 +9,7 @@ namespace PatientCard.Models
     {
         [Key]
         public int IdOperation { get; set; }
+        public string? Number { get; set; }
         public string? UserId { get; set; }  // внешний ключ
         public ApplicationUser? User { get; set; }  // свойство навигации
         public DateTime? DateOperation { get; set; }
@@ -30,15 +31,16 @@ namespace PatientCard.Models
 
         public string? ProtocolOperation { get; set; }
 
+        [ForeignKey("Financing")]
         public int? IdFinancing { get; set; }
-        [ForeignKey("IdFinancing")]
         public virtual Financing? Financing { get; set; }
 
         public int? IdDoctor { get; set; }
         [ForeignKey("IdDoctor")]
         public virtual Doctor? Doctor { get; set; }
 
-        public virtual ICollection<Hospital> Hospital { get; set; } = new List<Hospital>();
+
+
     }
 }
 

@@ -7,17 +7,25 @@ var connectionString = builder.Configuration.GetConnectionString("PatientCardCon
 
 builder.Services.AddDbContext<PatientCardContext>(options => options.UseSqlServer(connectionString));
 
-builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
-    .AddEntityFrameworkStores<PatientCardContext>();
+//builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+//    .AddEntityFrameworkStores<PatientCardContext>();
+
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+    .AddEntityFrameworkStores<PatientCardContext>()
+    .AddDefaultUI()
+    .AddDefaultTokenProviders();
+builder.Services.AddControllersWithViews();
+
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
     options.Password.RequireUppercase = false;
 });
+
+
 
 var app = builder.Build();
 
@@ -37,5 +45,11 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
+//await DbSeeder.SeedRolesAndAdminAsync(app.Services);
+
+using (var scope = app.Services.CreateScope())
+{
+    await DbSeeder.SeedRolesAndAdminAsync(scope.ServiceProvider);
+}
 
 app.Run();

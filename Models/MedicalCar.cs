@@ -19,6 +19,5 @@ namespace PatientCard.Models
         public int? IdDoctor { get; set; }
         [ForeignKey("IdDoctor")]
         public virtual Doctor? Doctor { get; set; }
-        //public virtual PersonalDate IdPersonNavigation { get; set; }
     }
 }

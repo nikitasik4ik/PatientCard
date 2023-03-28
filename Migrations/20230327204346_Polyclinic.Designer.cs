@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PatientCard.Data;
 
@@ -11,9 +12,11 @@ using PatientCard.Data;
 namespace PatientCard.Migrations
 {
     [DbContext(typeof(PatientCardContext))]
-    partial class PatientCardContextModelSnapshot : ModelSnapshot
+    [Migration("20230327204346_Polyclinic")]
+    partial class Polyclinic
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -607,6 +610,9 @@ namespace PatientCard.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdPolyclinic"));
 
+                    b.Property<int?>("AnalyzeIdAnalyzes")
+                        .HasColumnType("int");
+
                     b.Property<string>("AnamnesisDisease")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -626,9 +632,6 @@ namespace PatientCard.Migrations
                     b.Property<int?>("IdDepartament")
                         .HasColumnType("int");
 
-                    b.Property<int?>("IdDoctor")
-                        .HasColumnType("int");
-
                     b.Property<int?>("IdFinancing")
                         .HasColumnType("int");
 
@@ -641,18 +644,23 @@ namespace PatientCard.Migrations
                     b.Property<string>("Recommendation")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("StydyIdStydy")
+                        .HasColumnType("int");
+
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("IdPolyclinic");
 
-                    b.HasIndex("IdDepartament");
+                    b.HasIndex("AnalyzeIdAnalyzes");
 
-                    b.HasIndex("IdDoctor");
+                    b.HasIndex("IdDepartament");
 
                     b.HasIndex("IdFinancing");
 
                     b.HasIndex("IdOrganization");
+
+                    b.HasIndex("StydyIdStydy");
 
                     b.HasIndex("UserId");
 
@@ -1053,13 +1061,13 @@ namespace PatientCard.Migrations
 
             modelBuilder.Entity("PatientCard.Models.Polyclinic", b =>
                 {
+                    b.HasOne("PatientCard.Models.Analyze", null)
+                        .WithMany("Polyclinic")
+                        .HasForeignKey("AnalyzeIdAnalyzes");
+
                     b.HasOne("PatientCard.Models.Departament", "Departament")
                         .WithMany("Polyclinic")
                         .HasForeignKey("IdDepartament");
-
-                    b.HasOne("PatientCard.Models.Doctor", "Doctor")
-                        .WithMany()
-                        .HasForeignKey("IdDoctor");
 
                     b.HasOne("PatientCard.Models.Financing", "Financing")
                         .WithMany("Polyclinic")
@@ -1069,13 +1077,15 @@ namespace PatientCard.Migrations
                         .WithMany("Polyclinic")
                         .HasForeignKey("IdOrganization");
 
+                    b.HasOne("PatientCard.Models.Stydy", null)
+                        .WithMany("Polyclinics")
+                        .HasForeignKey("StydyIdStydy");
+
                     b.HasOne("PatientCard.Areas.Identity.Data.ApplicationUser", "User")
                         .WithMany("Polyclinic")
                         .HasForeignKey("UserId");
 
                     b.Navigation("Departament");
-
-                    b.Navigation("Doctor");
 
                     b.Navigation("Financing");
 
@@ -1186,6 +1196,11 @@ namespace PatientCard.Migrations
                     b.Navigation("Temperature");
                 });
 
+            modelBuilder.Entity("PatientCard.Models.Analyze", b =>
+                {
+                    b.Navigation("Polyclinic");
+                });
+
             modelBuilder.Entity("PatientCard.Models.Departament", b =>
                 {
                     b.Navigation("Analyze");
@@ -1239,6 +1254,11 @@ namespace PatientCard.Migrations
                     b.Navigation("Analyzes");
 
                     b.Navigation("Operation");
+                });
+
+            modelBuilder.Entity("PatientCard.Models.Stydy", b =>
+                {
+                    b.Navigation("Polyclinics");
                 });
 #pragma warning restore 612, 618
         }

@@ -69,7 +69,7 @@ namespace PatientCard.Controllers
             {
                 _context.Add(pressure);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "PersonalAccount");
             }
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", pressure.UserId);
             return View(pressure);
@@ -122,7 +122,7 @@ namespace PatientCard.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "PersonalAccount");
             }
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", pressure.UserId);
             return View(pressure);
@@ -163,7 +163,7 @@ namespace PatientCard.Controllers
             }
             
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "PersonalAccount");
         }
 
         private bool PressureExists(int id)

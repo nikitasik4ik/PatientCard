@@ -17,25 +17,69 @@ namespace PatientCard.Controllers
         public async Task<IActionResult> Index()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var personalAccount = new PersonalAccount();
 
             var analyze = await _context.Analyze
                 .Where(t => t.UserId == userId)
                 .Include(t => t.User)
                 .Include(t => t.Doctor)
                 .Include(t => t.Service)
-                .FirstOrDefaultAsync();
+                .Include(t => t.Departament)
+                .Include(t => t.Organization)
+                .ToListAsync();
 
 
-            var personalAccount = new PersonalAccount { Analyze = analyze };
+            personalAccount.Analyze = analyze;
 
-
-            var disabilitySheet = await _context.DisabilitySheet
+            var disabilitySheets = await _context.DisabilitySheet
                 .Where(d => d.UserId == userId)
                 .Include(d => d.User)
                 .Include(d => d.Doctor)
-                .FirstOrDefaultAsync();
+                .Include(d => d.Departament)
+                .Include(d => d.Organization)
+                .ToListAsync();
 
-            personalAccount.DisabilitySheet = disabilitySheet;
+            personalAccount.DisabilitySheet = disabilitySheets;
+
+            var medicalCars = await _context.MedicalCar
+            .Where(m => m.UserId == userId)
+            .Include(m => m.User)
+            .Include(m => m.Doctor)
+            .ToListAsync();
+
+            personalAccount.MedicalCar = medicalCars ;
+
+            var operations = await _context.Operation
+                .Where(t => t.UserId == userId)
+                .Include(t => t.User)
+                .Include(t => t.Doctor)
+                .Include(t => t.Service)
+                .Include(t => t.Departament)
+                .Include(t => t.Organization)
+                .ToListAsync();
+
+
+            personalAccount.Operation = operations ;
+
+            var polyclinics = await _context.Polyclinic
+                .Where(p => p.UserId == userId)
+                .Include(p => p.User)
+                .Include(p => p.Doctor)
+                .Include(p => p.Financing)
+                .Include(p => p.Departament)
+                .Include(p => p.Organization)
+                .ToListAsync();
+            personalAccount.Polyclinic = polyclinics;
+
+            var studies = await _context.Stydy
+                .Where(t => t.UserId == userId)
+                .Include(t => t.User)
+                .Include(t => t.Doctor)
+                .Include(t => t.Departament)
+                .Include(t => t.Organization)
+                .ToListAsync();
+
+            personalAccount.Stydy = studies ;
 
             // Load Anthropometry records
             var anthropometries = await _context.Anthropometry

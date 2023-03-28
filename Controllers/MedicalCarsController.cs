@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -22,9 +23,25 @@ namespace PatientCard.Controllers
         // GET: MedicalCars
         public async Task<IActionResult> Index()
         {
-            var patientCardContext = _context.MedicalCar.Include(m => m.Doctor).Include(m => m.User);
-            return View(await patientCardContext.ToListAsync());
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userRole = User.FindFirstValue(ClaimTypes.Role);
+
+            if (userRole == "Admin")
+            {
+                var patientCardContext = _context.MedicalCar.Include(m => m.Doctor).Include(m => m.User);
+                return View(await patientCardContext.ToListAsync());
+            }
+            else
+            {
+                var patientCardContext = _context.MedicalCar
+                    .Where(m => m.UserId == userId)
+                    .Include(m => m.Doctor)
+                    .Include(m => m.User);
+
+                return View(await patientCardContext.ToListAsync());
+            }
         }
+
 
         // GET: MedicalCars/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -49,8 +66,8 @@ namespace PatientCard.Controllers
         // GET: MedicalCars/Create
         public IActionResult Create()
         {
-            ViewData["IdDoctor"] = new SelectList(_context.Doctor, "IdDoctor", "IdDoctor");
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["IdDoctor"] = new SelectList(_context.Doctor, "IdDoctor", "FullNameDoctor");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FullName");
             return View();
         }
 
@@ -85,8 +102,8 @@ namespace PatientCard.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdDoctor"] = new SelectList(_context.Doctor, "IdDoctor", "IdDoctor", medicalCar.IdDoctor);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", medicalCar.UserId);
+            ViewData["IdDoctor"] = new SelectList(_context.Doctor, "IdDoctor", "FullNameDoctor", medicalCar.IdDoctor);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FullName", medicalCar.UserId);
             return View(medicalCar);
         }
 

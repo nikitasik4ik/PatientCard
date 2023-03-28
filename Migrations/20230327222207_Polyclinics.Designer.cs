@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PatientCard.Data;
 
@@ -11,9 +12,11 @@ using PatientCard.Data;
 namespace PatientCard.Migrations
 {
     [DbContext(typeof(PatientCardContext))]
-    partial class PatientCardContextModelSnapshot : ModelSnapshot
+    [Migration("20230327222207_Polyclinics")]
+    partial class Polyclinics
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -641,6 +644,9 @@ namespace PatientCard.Migrations
                     b.Property<string>("Recommendation")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("StydyIdStydy")
+                        .HasColumnType("int");
+
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
@@ -653,6 +659,8 @@ namespace PatientCard.Migrations
                     b.HasIndex("IdFinancing");
 
                     b.HasIndex("IdOrganization");
+
+                    b.HasIndex("StydyIdStydy");
 
                     b.HasIndex("UserId");
 
@@ -1069,6 +1077,10 @@ namespace PatientCard.Migrations
                         .WithMany("Polyclinic")
                         .HasForeignKey("IdOrganization");
 
+                    b.HasOne("PatientCard.Models.Stydy", null)
+                        .WithMany("Polyclinics")
+                        .HasForeignKey("StydyIdStydy");
+
                     b.HasOne("PatientCard.Areas.Identity.Data.ApplicationUser", "User")
                         .WithMany("Polyclinic")
                         .HasForeignKey("UserId");
@@ -1239,6 +1251,11 @@ namespace PatientCard.Migrations
                     b.Navigation("Analyzes");
 
                     b.Navigation("Operation");
+                });
+
+            modelBuilder.Entity("PatientCard.Models.Stydy", b =>
+                {
+                    b.Navigation("Polyclinics");
                 });
 #pragma warning restore 612, 618
         }
