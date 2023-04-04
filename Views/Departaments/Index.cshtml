@@ -4,44 +4,51 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
+<h1><i class="bi bi-house"></i> Отделения</h1>
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-primary" asp-action="Create"><i class="bi bi-plus-circle"></i> Создать новое</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.NameDepartament)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OfficeDepartament)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AdressDepartament)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NameDepartament)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OfficeDepartament)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AdressDepartament)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdDepartament">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdDepartament">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdDepartament">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="table-responsive">
+    <table id="dataTable" class="table table-striped table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th><i class="bi bi-journal-text"></i> @Html.DisplayNameFor(model => model.NameDepartament)</th>
+                <th><i class="bi bi-person-square"></i> @Html.DisplayNameFor(model => model.OfficeDepartament)</th>
+                <th><i class="bi bi-geo-alt"></i> @Html.DisplayNameFor(model => model.AdressDepartament)</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="@(item.IdDepartament % 2 == 0 ? "table-secondary" : "")">
+                    <td>@Html.DisplayFor(modelItem => item.NameDepartament)</td>
+                    <td>@Html.DisplayFor(modelItem => item.OfficeDepartament)</td>
+                    <td>@Html.DisplayFor(modelItem => item.AdressDepartament)</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.IdDepartament"><i class="fas fa-edit"></i></a> |
+                        <a asp-action="Details" asp-route-id="@item.IdDepartament"><i class="fas fa-info"></i></a> |
+                        <a asp-action="Delete" asp-route-id="@item.IdDepartament"><i class="fas fa-trash"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<style>
+    .table-striped > tbody > tr:nth-of-type(odd) {
+        background-color: #f7f7f7;
+    }
+
+    .table-dark {
+        color: #fff;
+        background-color: #343a40;
+        border-color: #454d55;
+    }
+
+        .table-dark th,
+        .table-dark td,
+        .table-dark thead th {
+            border-color: #454d55;
+        }
+</style>

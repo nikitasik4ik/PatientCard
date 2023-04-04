@@ -1,8 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using iTextSharp.text.pdf;
+using iTextSharp.text;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PatientCard.Data;
 using PatientCard.Models;
 using System.Security.Claims;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System.Net.Mime;
+using System.Diagnostics;
 
 namespace PatientCard.Controllers
 {
@@ -14,6 +20,7 @@ namespace PatientCard.Controllers
         {
             _context = context;
         }
+
         public async Task<IActionResult> Index()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -47,7 +54,7 @@ namespace PatientCard.Controllers
             .Include(m => m.Doctor)
             .ToListAsync();
 
-            personalAccount.MedicalCar = medicalCars ;
+            personalAccount.MedicalCar = medicalCars;
 
             var operations = await _context.Operation
                 .Where(t => t.UserId == userId)
@@ -59,7 +66,7 @@ namespace PatientCard.Controllers
                 .ToListAsync();
 
 
-            personalAccount.Operation = operations ;
+            personalAccount.Operation = operations;
 
             var polyclinics = await _context.Polyclinic
                 .Where(p => p.UserId == userId)
@@ -79,7 +86,16 @@ namespace PatientCard.Controllers
                 .Include(t => t.Organization)
                 .ToListAsync();
 
-            personalAccount.Stydy = studies ;
+            personalAccount.Stydy = studies;
+
+            var recipes = await _context.Recipe
+                .Where(r => r.UserId == userId)
+                .Include(r => r.User)
+                .Include(r => r.Doctor)
+                .Include(r => r.SignatureDoctor)
+                .ToListAsync();
+
+            personalAccount.Recipe = recipes;
 
             // Load Anthropometry records
             var anthropometries = await _context.Anthropometry

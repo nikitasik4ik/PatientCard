@@ -51,10 +51,10 @@ namespace PatientCard.Controllers
         // GET: Stydies/Create
         public IActionResult Create()
         {
-            ViewData["IdDepartament"] = new SelectList(_context.Departament, "IdDepartament", "IdDepartament");
-            ViewData["IdDoctor"] = new SelectList(_context.Doctor, "IdDoctor", "IdDoctor");
-            ViewData["IdOrganization"] = new SelectList(_context.Organization, "IdOrganization", "IdOrganization");
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["IdDepartament"] = new SelectList(_context.Departament, "IdDepartament", "NameDepartament");
+            ViewData["IdDoctor"] = new SelectList(_context.Doctor, "IdDoctor", "FullNameDoctor");
+            ViewData["IdOrganization"] = new SelectList(_context.Organization, "IdOrganization", "Name");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FullName");
             return View();
         }
 
@@ -91,10 +91,10 @@ namespace PatientCard.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdDepartament"] = new SelectList(_context.Departament, "IdDepartament", "IdDepartament", stydy.IdDepartament);
-            ViewData["IdDoctor"] = new SelectList(_context.Doctor, "IdDoctor", "IdDoctor", stydy.IdDoctor);
-            ViewData["IdOrganization"] = new SelectList(_context.Organization, "IdOrganization", "IdOrganization", stydy.IdOrganization);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", stydy.UserId);
+            ViewData["IdDepartament"] = new SelectList(_context.Departament, "IdDepartament", "NameDepartament", stydy.IdDepartament);
+            ViewData["IdDoctor"] = new SelectList(_context.Doctor, "IdDoctor", "FullNameDoctor", stydy.IdDoctor);
+            ViewData["IdOrganization"] = new SelectList(_context.Organization, "IdOrganization", "Name", stydy.IdOrganization);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FullName", stydy.UserId);
             return View(stydy);
         }
 

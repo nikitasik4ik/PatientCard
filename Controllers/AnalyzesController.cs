@@ -19,13 +19,6 @@ namespace PatientCard.Controllers
         {
             _context = context;
         }
-
-        // GET: Analyzes
-        //public async Task<IActionResult> Index()
-        //{
-        //    var patientCardContext = _context.Analyze.Include(a => a.Departament).Include(a => a.Doctor).Include(a => a.Organization).Include(a => a.Service).Include(a => a.User);
-        //    return View(await patientCardContext.ToListAsync());
-        //}
         public async Task<IActionResult> Index()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -88,7 +81,7 @@ namespace PatientCard.Controllers
             ViewData["IdDoctor"] = new SelectList(_context.Doctor, "IdDoctor", "FullNameDoctor");
             ViewData["IdOrganization"] = new SelectList(_context.Organization, "IdOrganization", "Name");
             ViewData["IdService"] = new SelectList(_context.Service, "IdService", "NameService");
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FullName");
             return View();
         }
 
@@ -109,7 +102,7 @@ namespace PatientCard.Controllers
             ViewData["IdDoctor"] = new SelectList(_context.Doctor, "IdDoctor", "IdDoctor", analyze.IdDoctor);
             ViewData["IdOrganization"] = new SelectList(_context.Organization, "IdOrganization", "IdOrganization", analyze.IdOrganization);
             ViewData["IdService"] = new SelectList(_context.Service, "IdService", "IdService", analyze.IdService);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FullName", analyze.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", analyze.UserId);
             return View(analyze);
         }
 

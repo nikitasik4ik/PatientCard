@@ -21,13 +21,13 @@ ViewBag.Title = "Index";
         <button class="nav-link rounded-0" data-tab="menu1" onclick="changeContent('menu1')">Анализы</button>
     </li>
     <li class="nav-item">
-        <button class="nav-link rounded-0" data-tab="menu2" onclick="changeContent('menu2')">Антропометрия</button>
+        <button class="nav-link rounded-0" data-tab="menu2" onclick="changeContent('menu2')">Вес</button>
     </li>
     <li class="nav-item">
-        <button class="nav-link rounded-0" data-tab="menu3" onclick="changeContent('menu3')">Температура</button>
+        <button class="nav-link rounded-0 active" data-tab="menu3" onclick="changeContent('menu3')">Температура</button>
     </li>
     <li class="nav-item">
-        <button class="nav-link rounded-0 active" data-tab="menu4" onclick="changeContent('menu4')">Давление</button>
+        <button class="nav-link rounded-0" data-tab="menu4" onclick="changeContent('menu4')">Давление</button>
     </li>
     <li class="nav-item">
         <button class="nav-link rounded-0" data-tab="menu5" onclick="changeContent('menu5')">Уровень глюкозы</button>
@@ -47,7 +47,11 @@ ViewBag.Title = "Index";
     <li class="nav-item">
         <button class="nav-link rounded-0" data-tab="operation" onclick="changeContent('operation')">Операции</button>
     </li>
+    <li class="nav-item">
+        <button class="nav-link rounded-0" data-tab="recipe" onclick="changeContent('recipe')">Рецепты</button>
+    </li>
 </ul>
+<br />
 <div class="tab-content">
     <div class="tab-pane container p-0" id="home">
         <div class="row">
@@ -59,13 +63,13 @@ ViewBag.Title = "Index";
                             <h5 class="card-title">@disabilitySheet.User.FullName</h5>
                         </div>
                         <div class="card-body">
-                            <p class="card-text"><strong>Doctor:</strong> @disabilitySheet.Doctor.FullNameDoctor</p>
-                            <p class="card-text"><strong>From Date:</strong> @disabilitySheet.FromDate</p>
-                            <p class="card-text"><strong>To Date:</strong> @disabilitySheet.ToDate</p>
-                            <p class="card-text"><strong>Reason:</strong> @disabilitySheet.Reason</p>
-                            <p class="card-text"><strong>Date Of Singing:</strong> @disabilitySheet.DateOfSinging</p>
-                            <p class="card-text"><strong>Departament:</strong> @disabilitySheet.Departament.NameDepartament</p>
-                            <p class="card-text"><strong>Organization:</strong> @disabilitySheet.Organization.Name</p>
+                            <p class="card-text"><strong>Доктор:</strong> @disabilitySheet.Doctor.FullNameDoctor</p>
+                            <p class="card-text"><strong>С:</strong> @disabilitySheet.FromDate</p>
+                            <p class="card-text"><strong>По:</strong> @disabilitySheet.ToDate</p>
+                            <p class="card-text"><strong>Причина:</strong> @disabilitySheet.Reason</p>
+                            <p class="card-text"><strong>Дата выписки:</strong> @disabilitySheet.DateOfSinging</p>
+                            <p class="card-text"><strong>Учреждение:</strong> @disabilitySheet.Departament.NameDepartament</p>
+                            <p class="card-text"><strong>Отделение:</strong> @disabilitySheet.Organization.Name</p>
                         </div>
                     </div>
                 </div>
@@ -196,8 +200,40 @@ ViewBag.Title = "Index";
             }
         </div>
     </div>
+    @*ы*@
+    <div class="tab-pane container p-0" id="recipe">
+        <div class="row">
+            @foreach (var recipe in Model.Recipe)
+            {
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">@recipe.User.FullName</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"><strong>Код рецепта:</strong> @recipe.CodeRecipe</p>
+                            <p class="card-text"><strong>Дата рецепта:</strong> @recipe.DateRecipe</p>
+                            <p class="card-text"><strong>Доктор:</strong> @recipe.Doctor.FullNameDoctor</p>
+                            <p class="card-text"><strong>Наименование препарата:</strong> @recipe.RecipeName</p>
+                            <p class="card-text"><strong>Информация:</strong> @recipe.SignatureDoctor.Information</p>
+                            <p class="card-text"><strong>Сертификация:</strong> @recipe.SignatureDoctor.Certificate</p>
+                            <p class="card-text"><strong>Действует с:</strong> @recipe.SignatureDoctor.ValidWith</p>
+                            <p class="card-text"><strong>Действует до:</strong> @recipe.SignatureDoctor.ValidUntil</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="javascript:void(0);">
+                                <img src="https://img1.pngindir.com/20180213/tce/kisspng-apple-icon-image-format-print-job-scalable-vector-printer-5a8274235c5b70.2236973315184988513783.jpg" alt="PDF" width="34">
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    @*ы*@
     <div class="tab-pane container p-0" id="menu2">
-        <h5 class="text-uppercase p-2 text-center">Антропометрические данные</h5>
+        <h5 class="text-uppercase p-2 text-center">Вес</h5>
         <div class="text-right mb-2">
             <a href="@Url.Action("Create", "Anthropometries")" class="btn btn-primary">Добавить</a>
         </div>
@@ -226,7 +262,7 @@ ViewBag.Title = "Index";
     </div>
 
 
-    <div class="tab-pane container p-0" id="menu3">
+    <div class="tab-pane container active p-0" id="menu3">
         <h5 class="text-uppercase p-2 text-center">Температура</h5>
         <div class="text-right mb-2">
             @Html.ActionLink("Добавить", "Create", "Temperatures", null, new { @class = "btn btn-primary" })
@@ -236,6 +272,7 @@ ViewBag.Title = "Index";
                 <tr>
                     <th>@Html.DisplayNameFor(m => Model.Temperature.FirstOrDefault().Value)</th>
                     <th>@Html.DisplayNameFor(m => Model.Temperature.FirstOrDefault().Date)</th>
+                    <th class="col-1" style="width: 222px;"></th>
                 </tr>
             </thead>
             <tbody>
@@ -244,13 +281,17 @@ ViewBag.Title = "Index";
                     <tr>
                         <td>@temp.Value</td>
                         <td>@temp.Date</td>
+                        <td class="col-1" style="width: 222px;">
+                            <a href="@Url.Action("Edit", "Temperatures", new { id = temp.TemperatureId })" class="btn btn-primary mr-2">Изменить</a>
+                            <a href="@Url.Action("Delete", "Temperatures", new { id = temp.TemperatureId })" class="btn btn-danger">Удалить</a>
+                        </td>
                     </tr>
                 }
             </tbody>
         </table>
     </div>
 
-    <div class="tab-pane container p-0 active" id="menu4">
+    <div class="tab-pane container p-0" id="menu4">
         <h5 class="text-uppercase p-2 text-center">Давление</h5>
         <div class="text-right mb-2">
             @Html.ActionLink("Добавить", "Create", "Pressures", null, new { @class = "btn btn-primary" })
@@ -260,6 +301,7 @@ ViewBag.Title = "Index";
                 <tr>
                     <th>@Html.DisplayNameFor(m => Model.Pressure.FirstOrDefault().Value)</th>
                     <th>@Html.DisplayNameFor(m => Model.Pressure.FirstOrDefault().Date)</th>
+                    <th class="col-1" style="width: 222px;"></th>
                 </tr>
             </thead>
             <tbody>
@@ -268,6 +310,10 @@ ViewBag.Title = "Index";
                     <tr>
                         <td>@pres.Value</td>
                         <td>@pres.Date</td>
+                        <td class="col-1" style="width: 222px;">
+                            <a href="@Url.Action("Edit", "Pressures", new { id = pres.PressureId })" class="btn btn-primary mr-2">Изменить</a>
+                            <a href="@Url.Action("Delete", "Pressures", new { id = pres.PressureId })" class="btn btn-danger">Удалить</a>
+                        </td>
                     </tr>
                 }
             </tbody>
@@ -284,6 +330,7 @@ ViewBag.Title = "Index";
                 <tr>
                     <th>@Html.DisplayNameFor(m => Model.Glucose.FirstOrDefault().Value)</th>
                     <th>@Html.DisplayNameFor(m => Model.Glucose.FirstOrDefault().Date)</th>
+                    <th class="col-1" style="width: 222px;"></th>
                 </tr>
             </thead>
             <tbody>
@@ -292,6 +339,10 @@ ViewBag.Title = "Index";
                     <tr>
                         <td>@gluc.Value</td>
                         <td>@gluc.Date</td>
+                        <td class="col-1" style="width: 222px;">
+                            <a href="@Url.Action("Edit", "Glucoses", new { id = gluc.GlucoseId })" class="btn btn-primary mr-2">Изменить</a>
+                            <a href="@Url.Action("Delete", "Glucoses", new { id = gluc.GlucoseId })" class="btn btn-danger">Удалить</a>
+                        </td>
                     </tr>
                 }
             </tbody>
@@ -307,6 +358,7 @@ ViewBag.Title = "Index";
                 <tr>
                     <th>@Html.DisplayNameFor(m => Model.Oxygen.FirstOrDefault().Value)</th>
                     <th>@Html.DisplayNameFor(m => Model.Oxygen.FirstOrDefault().Date)</th>
+                    <th class="col-1" style="width: 222px;"></th>
                 </tr>
             </thead>
             <tbody>
@@ -315,6 +367,10 @@ ViewBag.Title = "Index";
                     <tr>
                         <td>@oxy.Value</td>
                         <td>@oxy.Date</td>
+                        <td class="col-1" style="width: 222px;">
+                            <a href="@Url.Action("Edit", "Oxygens", new { id = oxy.OxygenId })" class="btn btn-primary mr-2">Изменить</a>
+                            <a href="@Url.Action("Delete", "Oxygens", new { id = oxy.OxygenId })" class="btn btn-danger">Удалить</a>
+                        </td>
                     </tr>
                 }
             </tbody>

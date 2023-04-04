@@ -2,19 +2,19 @@
     Layout = "/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row justify-content-center">
-    <div class="col-5 mt-5">
+<div class="row justify-content-center text-center">
+    <div class="col-5 mt-5 mx-auto">
         <div class="card login-logout-card">
             <div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs">
                     <li class="nav-item">
                         <a class="nav-link" href="/Identity/Account/Login">
-                            Log In
+                            Вход
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/Identity/Account/Register">
-                            Register
+                            Регистрация
                         </a>
                     </li>
                 </ul>
@@ -29,7 +29,6 @@
         </div>
     </div>
 </div>
-
 @section Scripts{
     @await RenderSectionAsync("Scripts", required: false)
     <script>

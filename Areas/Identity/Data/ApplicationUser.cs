@@ -11,11 +11,11 @@ namespace PatientCard.Areas.Identity.Data
     {
         [PersonalData]
         [Column(TypeName = "nvarchar(100)")]
-        public string FirstName { get; set; }
-
+        public string LastName { get; set; }
         [PersonalData]
         [Column(TypeName = "nvarchar(100)")]
-        public string LastName { get; set; }
+        public string FirstName { get; set; }
+
 
         [PersonalData]
         [Column(TypeName = "nvarchar(100)")]
@@ -26,7 +26,7 @@ namespace PatientCard.Areas.Identity.Data
 
         public override string ToString()
         {
-            return $"{LastName} {FirstName} {(Patronymic ?? "")}";
+            return $"{FirstName} {LastName} {(Patronymic ?? "")}";
         }
         public string? Phone { get; set; }
         public string? GenderName { get; set; }
@@ -38,7 +38,6 @@ namespace PatientCard.Areas.Identity.Data
         public string? AdressReg { get; set; }
 
         public string? AdressRes { get; set; }
-
 
         public int? Snils { get; set; }
 

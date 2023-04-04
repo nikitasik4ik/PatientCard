@@ -67,7 +67,7 @@ namespace PatientCard.Controllers
             {
                 _context.Add(temperature);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index", "PersonalAccount");
+                return Redirect(Request.Headers["Referer"].ToString());
             }
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", temperature.UserId);
             return View(temperature);

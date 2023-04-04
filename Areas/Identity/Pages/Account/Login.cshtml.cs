@@ -81,7 +81,7 @@ namespace PatientCard.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Display(Name = "Remember me?")]
+            [Display(Name = "Запомнить меня?")]
             public bool RememberMe { get; set; }
         }
 
@@ -141,5 +141,15 @@ namespace PatientCard.Areas.Identity.Pages.Account
             // If we got this far, something failed, redisplay form
             return Page();
         }
+        public IActionResult OnGetRedirectToReturnUrl(string returnUrl = null)
+        {
+            if (returnUrl == null || !Url.IsLocalUrl(returnUrl))
+            {
+                return RedirectToPage("/Index");
+            }
+
+            return LocalRedirect(returnUrl);
+        }
+
     }
 }

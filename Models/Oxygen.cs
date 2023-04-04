@@ -7,7 +7,9 @@ namespace PatientCard.Models
     {
         [Key]
         public int OxygenId { get; set; }
+        [Display(Name = "Уровень кислорода")]
         public string? Value { get; set; }
+        [Display(Name = "Дата")]
         public DateTime? Date { get; set; }
 
         public string? UserId { get; set; }  // внешний ключ

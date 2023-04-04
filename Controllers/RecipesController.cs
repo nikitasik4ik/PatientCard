@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -22,9 +23,27 @@ namespace PatientCard.Controllers
         // GET: Recipes
         public async Task<IActionResult> Index()
         {
-            var patientCardContext = _context.Recipe.Include(r => r.Doctor).Include(r => r.SignatureDoctor).Include(r => r.User);
-            return View(await patientCardContext.ToListAsync());
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var personalAccount = new PersonalAccount();
+
+            if (User.IsInRole("Admin"))
+            {
+                // если пользователь является админом, получаем все записи
+                var patientCardContext = _context.Recipe.Include(r => r.Doctor).Include(r => r.SignatureDoctor).Include(r => r.User);
+                return View(await patientCardContext.ToListAsync());
+            }
+            else
+            {
+                // иначе, получаем только записи текущего пользователя
+                var patientCardContext = _context.Recipe
+                    .Where(r => r.UserId == userId)
+                    .Include(r => r.Doctor)
+                    .Include(r => r.SignatureDoctor)
+                    .Include(r => r.User);
+                return View(await patientCardContext.ToListAsync());
+            }
         }
+
 
         // GET: Recipes/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -50,9 +69,9 @@ namespace PatientCard.Controllers
         // GET: Recipes/Create
         public IActionResult Create()
         {
-            ViewData["IdDoctor"] = new SelectList(_context.Doctor, "IdDoctor", "IdDoctor");
+            ViewData["IdDoctor"] = new SelectList(_context.Doctor, "IdDoctor", "FullNameDoctor");
             ViewData["IdSignatureDoctor"] = new SelectList(_context.Set<SignatureDoctor>(), "IdSignatureDoctor", "IdSignatureDoctor");
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FullName");
             return View();
         }
 
@@ -61,10 +80,14 @@ namespace PatientCard.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdRecipe,CodeRecipe,DateRecipe,UserId,IdDoctor,RecipeName,IdSignatureDoctor")] Recipe recipe)
+        public async Task<IActionResult> Create([Bind("IdRecipe,CodeRecipe,DateRecipe,UserId,RecipeName")] Recipe recipe, int? IdDoctor, int? IdSignatureDoctor)
         {
             if (ModelState.IsValid)
             {
+                var doctor = await _context.Doctor.Include(d => d.SignatureDoctor).FirstOrDefaultAsync(d => d.IdDoctor == IdDoctor);
+                var signatureDoctor = doctor?.SignatureDoctor;
+                recipe.IdDoctor = IdDoctor;
+                recipe.SignatureDoctor = signatureDoctor;
                 _context.Add(recipe);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -74,6 +97,7 @@ namespace PatientCard.Controllers
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", recipe.UserId);
             return View(recipe);
         }
+
 
         // GET: Recipes/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -88,9 +112,9 @@ namespace PatientCard.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdDoctor"] = new SelectList(_context.Doctor, "IdDoctor", "IdDoctor", recipe.IdDoctor);
+            ViewData["IdDoctor"] = new SelectList(_context.Doctor, "IdDoctor", "FullNameDoctor", recipe.IdDoctor);
             ViewData["IdSignatureDoctor"] = new SelectList(_context.Set<SignatureDoctor>(), "IdSignatureDoctor", "IdSignatureDoctor", recipe.IdSignatureDoctor);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", recipe.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FullName", recipe.UserId);
             return View(recipe);
         }
 

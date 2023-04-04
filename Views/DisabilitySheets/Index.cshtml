@@ -4,13 +4,30 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<style>
+    .table-striped > tbody > tr:nth-of-type(odd) {
+        background-color: #f7f7f7;
+    }
 
+    .table-dark {
+        color: #fff;
+        background-color: #343a40;
+        border-color: #454d55;
+    }
+
+        .table-dark th,
+        .table-dark td,
+        .table-dark thead th {
+            border-color: #454d55;
+        }
+</style>
+<h1>Лист нетрудоспособности</h1>
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-primary" asp-action="Create"><i class="bi bi-plus-circle"></i> Создать новое</a>
 </p>
-<table class="table">
-    <thead>
+<div class="table-responsive">
+    <table id="dataTable" class="table table-striped table-hover">
+        <thead class="thead-dark">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.User)
@@ -40,38 +57,40 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
                     @Html.DisplayFor(modelItem => item.User.FullName)
-            </td>
-            <td>
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Doctor.FullNameDoctor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FromDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ToDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Departament.NameDepartament)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Organization.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateOfSinging)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Reason)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdDisabilitySheet">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdDisabilitySheet">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdDisabilitySheet">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FromDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ToDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Departament.NameDepartament)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Organization.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateOfSinging)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Reason)
+                </td>
+                <td>
+                        <a asp-action="Edit" asp-route-id="@item.IdDisabilitySheet"><i class="fas fa-edit"></i></a> |
+                        <a asp-action="Details" asp-route-id="@item.IdDisabilitySheet"><i class="fas fa-info"></i></a> |
+                        <a asp-action="Delete" asp-route-id="@item.IdDisabilitySheet"><i class="fas fa-trash"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

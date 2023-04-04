@@ -3,63 +3,61 @@
 @{
     ViewData["Title"] = "Index";
 }
+<style>
+    .table-striped > tbody > tr:nth-of-type(odd) {
+        background-color: #f7f7f7;
+    }
 
-<h1>Index</h1>
+    .table-dark {
+        color: #fff;
+        background-color: #343a40;
+        border-color: #454d55;
+    }
+
+        .table-dark th,
+        .table-dark td,
+        .table-dark thead th {
+            border-color: #454d55;
+        }
+</style>
+
+<h1><i class="bi bi-bar-chart-line"></i> Анализы</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-primary" asp-action="Create"><i class="bi bi-plus-circle"></i> Создать новое</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Departament)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Organization)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Service)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateAnalyzes)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Doctor)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Departament.NameDepartament)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Organization.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Service.NameService)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateAnalyzes)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Doctor.FullNameDoctor)
-            </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.User.FullName)
-                </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdAnalyzes">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdAnalyzes">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdAnalyzes">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+<div class="table-responsive">
+    <table id="dataTable" class="table table-striped table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th><i class="bi bi-house"></i> @Html.DisplayNameFor(model => model.Departament)</th>
+                <th><i class="bi bi-building"></i> @Html.DisplayNameFor(model => model.Organization)</th>
+                <th><i class="bi bi-briefcase"></i> @Html.DisplayNameFor(model => model.Service)</th>
+                <th><i class="bi bi-calendar"></i> @Html.DisplayNameFor(model => model.DateAnalyzes)</th>
+                <th><i class="bi bi-person"></i> @Html.DisplayNameFor(model => model.Doctor)</th>
+                <th><i class="bi bi-person"></i> @Html.DisplayNameFor(model => model.User)</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="@(item.IdAnalyzes % 2 == 0 ? "table-secondary" : "")">
+                    <td>@Html.DisplayFor(modelItem => item.Departament.NameDepartament)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Organization.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Service.NameService)</td>
+                    <td>@Html.DisplayFor(modelItem => item.DateAnalyzes)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Doctor.FullNameDoctor)</td>
+                    <td>@Html.DisplayFor(modelItem => item.User.FullName)</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.IdAnalyzes"><i class="fas fa-edit"></i></a> |
+                        <a asp-action="Details" asp-route-id="@item.IdAnalyzes"><i class="fas fa-info"></i></a> |
+                        <a asp-action="Delete" asp-route-id="@item.IdAnalyzes"><i class="fas fa-trash"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

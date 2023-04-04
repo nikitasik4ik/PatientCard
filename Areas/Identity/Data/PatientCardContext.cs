@@ -29,7 +29,7 @@ public class PatientCardContext : IdentityDbContext<ApplicationUser>
     public DbSet<PatientCard.Models.Service> Service { get; set; } = default!;
     public DbSet<PatientCard.Models.Stydy> Stydy { get; set; } = default!;
     public DbSet<PatientCard.Models.Temperature> Temperature { get; set; } = default!;
-
+    public DbSet<PatientCard.Models.SignatureDoctor> SignatureDoctor { get; set; } = default!;
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);

@@ -30,6 +30,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.SignatureDoctor)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SignatureDoctor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SignatureDoctor)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -43,16 +49,22 @@
                 @Html.DisplayFor(modelItem => item.DateRecipe)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.User.Id)
+                @Html.DisplayFor(modelItem => item.User.FullName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Doctor.IdDoctor)
+                @Html.DisplayFor(modelItem => item.Doctor.FullNameDoctor)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RecipeName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.SignatureDoctor.IdSignatureDoctor)
+                @Html.DisplayFor(modelItem => item.SignatureDoctor.Information)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SignatureDoctor.Certificate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SignatureDoctor.ValidUntil)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.IdRecipe">Edit</a> |
